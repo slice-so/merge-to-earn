@@ -1,0 +1,33 @@
+h1 {
+  @apply text-3xl font-black sm:text-4xl;
+  letter-spacing: 0.005em;
+}
+
+h2 {
+  @apply text-2xl font-bold sm:text-3xl;
+}
+
+h3 {
+  @apply text-xl pb-2 font-medium sm:text-2xl;
+}
+
+a {
+  @apply cursor-pointer font-medium text-black hover:text-blue-600;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.highlight {
+  text-decoration-line: underline;
+  text-decoration-style: solid;
+  text-decoration-color: theme("colors.blue.600");
+  text-decoration-thickness: 2px;
+  text-underline-offset: 1px;
+}
+
+.dark .highlight {
+  text-decoration-color: theme("colors.blue.300");
+}

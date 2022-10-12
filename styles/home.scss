@@ -1,0 +1,34 @@
+:root {
+  --black: #0f1115;
+  --white: #fff;
+}
+.dark {
+  --black: #fff;
+  --white: #0f1115;
+}
+
+.clickable {
+  @apply cursor-pointer font-medium;
+
+  &.active {
+    text-decoration-line: underline;
+    text-decoration-style: solid;
+    text-decoration-color: theme("colors.blue.600");
+    text-decoration-thickness: 2px;
+    text-underline-offset: 1px;
+  }
+}
+
+.imageContainer > div {
+  min-width: 100%;
+}
+
+.background-modal {
+  background-image: radial-gradient(rgba(0, 0, 0, 0) 1px, white 1px);
+  background-size: 4px 4px;
+  backdrop-filter: brightness(100%) blur(3px);
+}
+
+.dark .background-modal {
+  background-image: radial-gradient(rgba(0, 0, 0, 0) 1px, black 1px);
+}

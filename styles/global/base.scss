@@ -1,0 +1,12 @@
+html,
+body {
+  @apply antialiased;
+  padding: 0;
+  margin: 0;
+  font-family: Rubik, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+    Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+body {
+  @apply bg-white text-black;
+}

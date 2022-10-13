@@ -116,7 +116,7 @@ module.exports = {
     }
   },
   variants: {
-    // nightwind: ["group-hover"],
+    nightwind: ["hover"]
   },
 
   plugins: [

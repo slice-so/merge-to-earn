@@ -20,7 +20,7 @@ const { chains, provider } = configureChains(defaultChains, [
 ])
 
 const { connectors } = getDefaultWallets({
-  appName: "Slice",
+  appName: "Merge to earn",
   chains
 })
 

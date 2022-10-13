@@ -2,9 +2,11 @@ import Link from "next/link"
 import { useRouter } from "next/router"
 // import { signIn, useSession } from "next-auth/client"
 import Logo from "@components/icons/Logo"
-// import Nightwind from "@components/icons/Nightwind"
+import Nightwind from "@components/icons/Nightwind"
 import { Container } from "@components/ui"
 import { ConnectButton } from "@rainbow-me/rainbowkit"
+import { Github } from "@components/icons/Social"
+import { accounts } from "../Social/Social"
 
 const Navbar = () => {
   // const [session, loading] = useSession()
@@ -21,11 +23,20 @@ const Navbar = () => {
               </a>
             </Link>
           </div>
-          <div className="relative z-10 flex items-center space-x-6">
+          <div className="relative z-10 flex items-center space-x-6 sm:space-x-8">
+            <a
+              className="w-6 hover:text-purple-500"
+              href={accounts["github"]}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Github logo"
+            >
+              <Github />
+            </a>
+            <div>
+              <Nightwind size="h-[24px]" />
+            </div>
             <ConnectButton showBalance={false} />
-            {/* <div>
-            <Nightwind size="h-[24px]" />
-          </div> */}
           </div>
         </nav>
       </Container>

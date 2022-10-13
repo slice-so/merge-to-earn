@@ -11,7 +11,7 @@ export interface Props extends InputHTMLAttributes<HTMLInputElement> {
   after?: string
   error?: boolean
   loading?: boolean
-  question?: JSX.Element
+  question?: JSX.Element | string
   questionPosition?: string
   onClickLabel?: string
   prefixAction?: (...args: any[]) => any
@@ -42,7 +42,7 @@ const Input: React.FC<Props> = (props) => {
   const rootClassName = `bg-white rounded-sm py-2 px-6 w-full appearance-none pr-4 border focus:outline-none ${className} ${
     error
       ? "text-red-500 border-red-400 focus:border-red-400 shadow-error"
-      : "text-black border-gray-200 focus:border-blue-600 placeholder-gray-400 disabled:text-gray-500 disabled:border-blue-100 disabled:bg-gray-50"
+      : "text-black border-gray-200 focus:border-blue-600 placeholder-gray-400 disabled:text-gray-500 disabled:bg-gray-50"
   }`
 
   const handleOnChange = (e: any) => {
@@ -53,7 +53,7 @@ const Input: React.FC<Props> = (props) => {
   }
 
   return (
-    <label className="text-left">
+    <label className="pb-4 text-left">
       {label && (
         <>
           <div className="pb-2">

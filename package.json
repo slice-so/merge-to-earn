@@ -24,7 +24,7 @@
     "sass": "^1.55.0",
     "swr": "^1.3.0",
     "typescript": "^4.8.4",
-    "wagmi": "^0.6.8"
+    "wagmi": "^0.7.0"
   },
   "devDependencies": {
     "@tailwindcss/forms": "^0.3.4",

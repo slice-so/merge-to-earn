@@ -10,19 +10,21 @@ import { ethers } from "ethers"
 import { useEffect, useState } from "react"
 import { useSignMessage } from "wagmi"
 import { useAppContext } from "../context"
+import { SlicerOwner } from "../FormSlicer/FormSlicer"
 
-type Props = {}
-
-const Main = ({}: Props) => {
+const Main = () => {
   const { account } = useAppContext()
   const baseUrl = `https://safe-transaction.${process.env.NEXT_PUBLIC_ENV}.gnosis.io`
   const delegateAddress = process.env.NEXT_PUBLIC_DELEGATE
 
   const [delegateSuccess, setDelegateSuccess] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [success, setSuccess] = useState(false)
   const [message, setMessage] = useState<Message>()
 
   const [safeAddress, setSafeAddress] = useState("")
+  const [slicerOwners, setSlicerOwners] = useState<SlicerOwner[]>([])
+  const [currencies, setCurrencies] = useState<string[]>([])
 
   const { data, isLoading, isSuccess, signMessage } = useSignMessage({
     message: ethers.utils.arrayify(
@@ -97,9 +99,13 @@ const Main = ({}: Props) => {
           <ExpandItem
             label="Slicer settings"
             content={
-              <>
-                <FormSlicer />
-              </>
+              <FormSlicer
+                success={success}
+                slicerOwners={slicerOwners}
+                setSlicerOwners={setSlicerOwners}
+                currencies={currencies}
+                setCurrencies={setCurrencies}
+              />
             }
           />
         </div>

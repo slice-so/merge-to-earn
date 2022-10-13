@@ -16,25 +16,25 @@ const FormSlicerCurrencyAddress = ({
   const [resolvedAddress, setResolvedAddress] = useState("")
 
   const handleChange = (value: string) => {
-    let items = currencies
+    let items = [...currencies]
     items[index] = value
     setCurrencies(items)
   }
 
-  const handleDelete = (index: number) => {
-    let items = currencies
+  const handleDelete = () => {
+    let items = [...currencies]
     items.splice(index, 1)
     setCurrencies(items)
   }
 
   return (
     <>
-      <div className="col-span-1 col-start-1 mx-auto mt-3 mb-3">
+      <div className="col-span-1 col-start-1 mx-auto mb-3">
         <div className="">
-          {index != 0 && <Delete onClick={() => handleDelete(index)} />}
+          <Delete onClick={() => handleDelete()} />
         </div>
       </div>
-      <div className="col-span-8 col-start-2 pt-3">
+      <div className="col-span-9 col-start-2 ">
         <InputAddress
           address={currencies[index]}
           onChange={handleChange}

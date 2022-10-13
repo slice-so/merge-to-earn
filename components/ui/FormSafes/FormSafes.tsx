@@ -47,7 +47,21 @@ const FormSafes = ({
               </a>
             </>
           }
-          question="The chosen safe will approve the slices to be minted for each PR, so in most cases should be owned by the project's maintainers."
+          question={
+            <>
+              <p>
+                The chosen safe will approve the slices to be minted for each
+                PR, so in most cases should be owned by the project&apos;s
+                maintainers.
+              </p>
+
+              <p>
+                As the slicer controller, the safe can choose which currencies
+                the slicer should accept besides ETH, or sell products on its
+                decentralized storefront.
+              </p>
+            </>
+          }
           value={safeAddress}
           setValue={setSafeAddress}
           options={formattedOwnedSafes}

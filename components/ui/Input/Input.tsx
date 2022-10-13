@@ -58,7 +58,7 @@ const Input: React.FC<Props> = (props) => {
         <>
           <div className="pb-2">
             <div className="relative flex items-center">
-              <p className="pr-1 text-sm font-semibold text-gray-700">
+              <p className="pr-1 text-sm font-semibold text-gray-600">
                 {label}
               </p>
               {question && (

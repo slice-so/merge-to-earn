@@ -1,8 +1,4 @@
-import { useAppContext } from "@components/ui/context"
-
 const Logo = ({ single = false, ...props }) => {
-  const { color1, color2 } = useAppContext()
-
   const size = props.size || "w-8 md:w-10"
   const margin = props.margin || "mt-1 ml-1.5"
 
@@ -52,8 +48,8 @@ const Logo = ({ single = false, ...props }) => {
               y2="151.721"
               gradientUnits="userSpaceOnUse"
             >
-              <stop stopColor={color1[0]} />
-              <stop offset="1" stopColor={color2[0]} />
+              <stop stopColor="#38bdf8" />
+              <stop offset="1" stopColor="#2563eb" />
             </linearGradient>
           </defs>
         </svg>

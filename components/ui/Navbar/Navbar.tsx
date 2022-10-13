@@ -4,6 +4,7 @@ import { useRouter } from "next/router"
 import Logo from "@components/icons/Logo"
 // import Nightwind from "@components/icons/Nightwind"
 import { Container } from "@components/ui"
+import { ConnectButton } from "@rainbow-me/rainbowkit"
 
 const Navbar = () => {
   // const [session, loading] = useSession()
@@ -21,6 +22,7 @@ const Navbar = () => {
             </Link>
           </div>
           <div className="relative z-10 flex items-center space-x-6">
+            <ConnectButton showBalance={false} />
             {/* <div>
             <Nightwind size="h-[24px]" />
           </div> */}

@@ -12,7 +12,7 @@ type Props = {
   message: Message
 }
 
-const OwnedSafes = ({
+const FormSafes = ({
   baseUrl,
   safeAddress,
   setSafeAddress,
@@ -32,7 +32,7 @@ const OwnedSafes = ({
       <div>
         <InputSelect
           label="Gnosis safe address"
-          genericText="Pick one of the safes owned"
+          genericText="Pick one of the safes you own"
           helpText={
             <>
               If you haven&apos;t created one for your project yet, you can do
@@ -41,7 +41,7 @@ const OwnedSafes = ({
                 href="https://gnosis-safe.io/app"
                 target="_blank"
                 rel="noreferrer"
-                className="highlight"
+                className="text-gray-500 highlight"
               >
                 Gnosis safe app
               </a>
@@ -59,4 +59,4 @@ const OwnedSafes = ({
   )
 }
 
-export default OwnedSafes
+export default FormSafes

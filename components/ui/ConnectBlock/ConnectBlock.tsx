@@ -8,7 +8,7 @@ const ConnectBlock = ({ children }) => {
     children
   ) : (
     <>
-      <div className="flex flex-col items-center py-6 mx-auto max-w-screen-xs">
+      <div className="flex flex-col items-center pb-6 mx-auto max-w-screen-xs">
         <div onClick={() => saEvent("connect_wallet_attempt")}>
           <ConnectButton />
         </div>

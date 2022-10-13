@@ -24,7 +24,7 @@ const InputAddress: React.FC<Props> = (props) => {
     address,
     required,
     label,
-    placeholder = "0x… / vitalik.eth",
+    placeholder = "0x… / slice-so.eth",
     onChange,
     resolvedAddress,
     setResolvedAddress,

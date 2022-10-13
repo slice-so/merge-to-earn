@@ -1,10 +1,15 @@
-import { Button, ConnectBlock, OwnedSafes } from "@components/ui"
+import {
+  Button,
+  ConnectBlock,
+  ExpandItem,
+  FormSafes,
+  FormSlicer
+} from "@components/ui"
 import handleMessage, { Message } from "@utils/handleMessage"
 import { ethers } from "ethers"
 import { useEffect, useState } from "react"
 import { useSignMessage } from "wagmi"
 import { useAppContext } from "../context"
-import { accounts } from "../Social/Social"
 
 type Props = {}
 
@@ -81,12 +86,23 @@ const Main = ({}: Props) => {
         className="w-full mx-auto space-y-8 max-w-screen-xs"
         onSubmit={(e) => submit(e)}
       >
-        <OwnedSafes
+        <FormSafes
           baseUrl={baseUrl}
           safeAddress={safeAddress}
           setSafeAddress={setSafeAddress}
           message={message}
         />
+
+        <div>
+          <ExpandItem
+            label="Slicer settings"
+            content={
+              <>
+                <FormSlicer />
+              </>
+            }
+          />
+        </div>
 
         <div className="pt-6">
           <p className="pb-6 text-sm text-gray-500">

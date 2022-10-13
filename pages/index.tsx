@@ -39,11 +39,11 @@ export default function Home() {
               />
             </div>
             <p className="pt-3 text-gray-500">
-              The best way to automate open source development
+              The ideal reward system for open source development
             </p>
           </div>
 
-          <div className="mx-auto prose">
+          <div className="mx-auto prose text-left max-w-screen-xs">
             <p>
               Merge to earn is a{" "}
               <a
@@ -55,16 +55,7 @@ export default function Home() {
                 Github action
               </a>{" "}
               to automatically reward contributors with a slice of ownership of
-              the project they contributed to, when a PR is merged. Based on{" "}
-              <a
-                href="https://slice.so"
-                target="_blank"
-                rel="noreferrer"
-                className="highlight"
-              >
-                slicers
-              </a>{" "}
-              and multisig Gnosis Safes.
+              the project they contributed to, when a PR is merged.
             </p>
             <p>Use this app to set up a slicer and safe for your repository.</p>
           </div>

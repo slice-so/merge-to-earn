@@ -10,6 +10,7 @@ import {
   Discord,
   Blog,
   Juicebox,
+  Slice,
   Notion
 } from "@components/icons/Social"
 
@@ -20,6 +21,7 @@ type Props = {
 }
 
 export const accounts = {
+  slice: "https://slice.so",
   twitter: "https://twitter.com/slice__so",
   discord: "https://discord.gg/CdyHUzdZks",
   github: "https://github.com/slice-so"
@@ -43,6 +45,7 @@ const Social: FC<Props> = ({ wrapperClassName, accounts }, props) => {
     instagram: { color: "hover:text-pink-500", element: Instagram },
     reddit: { color: "hover:text-red-500", element: Reddit },
     linkedin: { color: "hover:text-blue-700", element: Linkedin },
+    slice: { color: "hover:text-blue-600", element: Slice },
     mail: { color: "hover:text-gray-500", element: Mail }
   }
 

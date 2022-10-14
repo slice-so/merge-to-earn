@@ -38,7 +38,7 @@ export default function Home() {
                 position="mr-4"
               />
             </div>
-            <p className="pt-3 text-gray-500">
+            <p className="pt-3 font-bold text-gray-500 xs:text-lg">
               The ideal reward system for open source development
             </p>
           </div>

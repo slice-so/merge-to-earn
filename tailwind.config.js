@@ -44,75 +44,73 @@ module.exports = {
       },
       zIndex: {
         "-10": "-10"
-      }
-      // typography: (theme) => ({
-      //   DEFAULT: {
-      //     css: {
-      //       color: theme("colors.black"),
-      //       a: {
-      //         textDecorationColor: "var(--darkColor2)",
-      //         textDecorationThickness: "2px",
-      //         textUnderlineOffset: "1px"
-      //       },
-      //       h1: {
-      //         color: theme("colors.black"),
-      //         fontWeight: "900"
-      //       },
-      //       h2: {
-      //         color: theme("colors.black"),
-      //         fontWeight: "900"
-      //       },
-      //       h3: {
-      //         color: theme("colors.black"),
-      //         fontSize: "1.12em"
-      //       },
-      //       blockquote: {
-      //         borderLeftColor: theme("colors.random2.600")
-      //       },
-      //       "blockquote p:first-of-type::before": false,
-      //       "blockquote p:last-of-type::after": false,
-      //       strong: {
-      //         fontWeight: "900"
-      //       },
-      //       img: {
-      //         borderRadius: "0.75rem"
-      //       }
-      //     }
-      //   },
-      //   sm: {
-      //     css: {
-      //       color: theme("colors.black"),
-      //       a: {
-      //         textDecorationColor: "var(--darkColor2)",
-      //         textDecorationThickness: "2px",
-      //         textUnderlineOffset: "1px"
-      //       },
-      //       h1: {
-      //         color: theme("colors.black"),
-      //         fontWeight: "900"
-      //       },
-      //       h2: {
-      //         color: theme("colors.black"),
-      //         fontWeight: "900"
-      //       },
-      //       h3: {
-      //         color: theme("colors.black"),
-      //         fontSize: "1.12em"
-      //       },
-      //       blockquote: {
-      //         borderLeftColor: theme("colors.random2.600")
-      //       },
-      //       "blockquote p:first-of-type::before": false,
-      //       "blockquote p:last-of-type::after": false,
-      //       strong: {
-      //         fontWeight: "900"
-      //       },
-      //       img: {
-      //         borderRadius: "0.75rem"
-      //       }
-      //     }
-      //   }
-      // })
+      },
+      typography: (theme) => ({
+        DEFAULT: {
+          css: {
+            color: theme("colors.black"),
+            a: {
+              textDecorationThickness: "2px",
+              textUnderlineOffset: "1px"
+            },
+            h1: {
+              color: theme("colors.black"),
+              fontWeight: "900"
+            },
+            h2: {
+              color: theme("colors.black"),
+              fontWeight: "900"
+            },
+            h3: {
+              color: theme("colors.black"),
+              fontSize: "1.12em"
+            },
+            blockquote: {
+              borderLeftColor: theme("colors.random2.600")
+            },
+            "blockquote p:first-of-type::before": false,
+            "blockquote p:last-of-type::after": false,
+            strong: {
+              fontWeight: "900"
+            },
+            img: {
+              borderRadius: "0.75rem"
+            }
+          }
+        },
+        sm: {
+          css: {
+            color: theme("colors.black"),
+            a: {
+              textDecorationThickness: "2px",
+              textUnderlineOffset: "1px"
+            },
+            h1: {
+              color: theme("colors.black"),
+              fontWeight: "900"
+            },
+            h2: {
+              color: theme("colors.black"),
+              fontWeight: "900"
+            },
+            h3: {
+              color: theme("colors.black"),
+              fontSize: "1.12em"
+            },
+            blockquote: {
+              borderLeftColor: theme("colors.random2.600")
+            },
+            "blockquote p:first-of-type::before": false,
+            "blockquote p:last-of-type::after": false,
+            strong: {
+              fontWeight: "900"
+            },
+            img: {
+              borderRadius: "0.75rem"
+            }
+          }
+        }
+      })
     }
   },
   variants: {

@@ -34,11 +34,13 @@ const FormSlicer = ({
     setSlicerOwners([])
   }
 
-  useEffect(() => {
+  const handleAddOwner = () => {
     if (slicerOwners.length == 0) {
       setSlicerOwners([{ account, shares: 1000 }])
+    } else {
+      setSlicerOwners([...slicerOwners, { account: "", shares: 0 }])
     }
-  }, [account])
+  }
 
   useEffect(() => {
     if (success) {
@@ -112,16 +114,12 @@ const FormSlicer = ({
         </div>
         <div className="mt-4 xs:mt-6 inline-flex ml-[9px] text-green-500 group">
           <Add
-            onClick={() =>
-              setSlicerOwners([...slicerOwners, { account: "", shares: 0 }])
-            }
+            onClick={() => handleAddOwner()}
             className="mr-3 opacity-75 cursor-pointer group-hover:opacity-100"
           />
           <p
             className="font-medium opacity-75 cursor-pointer group-hover:opacity-100"
-            onClick={() =>
-              setSlicerOwners([...slicerOwners, { account: "", shares: 0 }])
-            }
+            onClick={() => handleAddOwner()}
           >
             Add owner
           </p>

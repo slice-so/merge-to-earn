@@ -41,7 +41,11 @@ function MyApp({ Component, pageProps }: AppProps) {
         defaultTheme="dark"
       >
         <WagmiConfig client={wagmiClient}>
-          <RainbowKitProvider chains={chains} coolMode>
+          <RainbowKitProvider
+            chains={chains}
+            coolMode
+            showRecentTransactions={true}
+          >
             <AppWrapper>
               <Layout>
                 <Background />

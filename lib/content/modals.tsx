@@ -42,16 +42,42 @@ export const SETUP = (params: any) => {
           initCondition={uploadStep < 3}
           uploadState={uploadState}
           waitingState="Slicer creation"
-          endState={uploadStep != 3 ? "Slicer created" : "Reverted"}
+          endState={
+            uploadStep != 3 ? (
+              <>
+                Created{" "}
+                <a
+                  href={`https://${
+                    process.env.NEXT_PUBLIC_ENV === "goerli" ? "testnet." : ""
+                  }slice.so/slicer/${slicerId}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="highlight"
+                >
+                  Slicer #{slicerId}
+                </a>
+              </>
+            ) : (
+              "Reverted"
+            )
+          }
         />
       </div>
-      <div className="pt-10">
+      <div className="pt-8">
         {uploadStep > 2 ? (
           <>
             {uploadStep == 4 && (
               <p className="pb-6 text-sm xs:px-10">
-                You&apos;re set! Your slicer has ID {slicerId}. Now go back to
-                your repository to finish setting up the Github action.
+                Finish setting up the workflow for your repository on{" "}
+                <a
+                  href="https://github.com"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="highlight"
+                >
+                  Github
+                </a>
+                .
               </p>
             )}
             <Button
@@ -60,8 +86,8 @@ export const SETUP = (params: any) => {
             />
           </>
         ) : (
-          <p className="max-w-sm mx-auto text-sm font-bold text-yellow-600">
-            Do not leave this page until the process has completed
+          <p className="max-w-sm mx-auto text-sm font-semibold text-yellow-600">
+            Wait until the process is completed
           </p>
         )}
       </div>

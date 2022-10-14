@@ -6,7 +6,7 @@ import {
   FormSlicer
 } from "@components/ui"
 import handleMessage, { Message } from "@utils/handleMessage"
-import { ethers } from "ethers"
+import { ContractReceipt, ethers } from "ethers"
 import { useEffect, useState } from "react"
 import {
   useContractWrite,
@@ -17,9 +17,13 @@ import { useAppContext } from "../context"
 import { SlicerOwner } from "../FormSlicer/FormSlicer"
 import sliceCore from "abi/SliceCore.json"
 import launchConfetti from "@utils/launchConfetti"
+import executeTransaction from "@utils/executeTransaction"
+import { useAddRecentTransaction } from "@rainbow-me/rainbowkit"
+import { LogDescription } from "ethers/lib/utils"
 
 const Main = () => {
   const { account, setModalView } = useAppContext()
+  const addRecentTransaction = useAddRecentTransaction()
   // const baseUrl = `https://safe-transaction.${process.env.NEXT_PUBLIC_ENV}.gnosis.io`
   const baseUrl = `https://safe-transaction-${process.env.NEXT_PUBLIC_ENV}.safe.global` // temp endpoint?
   const delegateAddress = process.env.NEXT_PUBLIC_DELEGATE
@@ -31,6 +35,7 @@ const Main = () => {
   const [safeAddress, setSafeAddress] = useState("")
   const [slicerOwners, setSlicerOwners] = useState<SlicerOwner[]>([])
   const [currencies, setCurrencies] = useState<string[]>([])
+  const [slicerId, setSlicerId] = useState(0)
 
   const { data, isLoading, isSuccess, signMessageAsync } = useSignMessage({
     message: ethers.utils.arrayify(
@@ -104,6 +109,7 @@ const Main = () => {
     setMessage(null)
     setLoading(true)
     setUploadStep(1)
+    setSlicerId(0)
 
     try {
       const res = await signMessageAsync()
@@ -112,8 +118,27 @@ const Main = () => {
       } else {
         setUploadStep(2)
 
+        const contract = new ethers.Contract(
+          process.env.NEXT_PUBLIC_SLICECORE,
+          sliceCore.abi
+        )
+
         // Create slicer
-        await sliceWriteAsync()
+        const receipt: ContractReceipt = await executeTransaction(
+          sliceWriteAsync,
+          setLoading,
+          `Create slicer`,
+          addRecentTransaction
+        )
+
+        const eventLogs: LogDescription[] = receipt?.logs.map((log) =>
+          contract.interface.parseLog(log)
+        )
+        const tokenId = eventLogs?.find((log) => log.name === "TokenSliced")
+          .args.tokenId
+
+        setSlicerId(Number(tokenId))
+
         launchConfetti()
 
         setUploadStep(4)
@@ -138,11 +163,12 @@ const Main = () => {
         name: `SETUP`,
         params: {
           uploadStep,
-          setModalView
+          setModalView,
+          slicerId
         }
       })
     }
-  }, [loading, uploadStep])
+  }, [loading, uploadStep, slicerId])
 
   return (
     <ConnectBlock>

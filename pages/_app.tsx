@@ -12,7 +12,7 @@ import { publicProvider } from "wagmi/providers/public"
 import { chain, createClient, configureChains, WagmiConfig } from "wagmi"
 import "@rainbow-me/rainbowkit/styles.css"
 
-const defaultChains = [chain.mainnet]
+const defaultChains = [chain[process.env.NEXT_PUBLIC_ENV]]
 
 const { chains, provider } = configureChains(defaultChains, [
   alchemyProvider({ apiKey: process.env.ALCHEMY_ID }),

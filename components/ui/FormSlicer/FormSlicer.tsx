@@ -1,10 +1,10 @@
 import Add from "@components/icons/Add"
 import { FormSlicerCurrencies, FormSlicerInput, Question } from "@components/ui"
-import { Dispatch, SetStateAction, useEffect, useState } from "react"
+import { Dispatch, SetStateAction, useEffect } from "react"
 import { useAppContext } from "../context"
 
 export type SlicerOwner = {
-  address: string
+  account: string
   shares: number
 }
 
@@ -36,11 +36,9 @@ const FormSlicer = ({
 
   useEffect(() => {
     if (slicerOwners.length == 0) {
-      setSlicerOwners([{ address: account, shares: 1000 }])
+      setSlicerOwners([{ account, shares: 1000 }])
     }
   }, [account])
-
-  console.log(totalShares)
 
   useEffect(() => {
     if (success) {
@@ -58,7 +56,7 @@ const FormSlicer = ({
           </p>
         </div>
         <div className="grid items-center grid-cols-8 text-left xs:grid-cols-10 md:grid-cols-12 gap-x-4 gap-y-3 xs:gap-y-4">
-          {slicerOwners.length && (
+          {slicerOwners.length != 0 && (
             <>
               <p className="mb-[-16px] text-sm text-gray-600 font-semibold hidden xs:block xs:col-span-5 xs:col-start-2 md:col-span-7 md:col-start-2">
                 Address
@@ -115,14 +113,14 @@ const FormSlicer = ({
         <div className="mt-4 xs:mt-6 inline-flex ml-[9px] text-green-500 group">
           <Add
             onClick={() =>
-              setSlicerOwners([...slicerOwners, { address: "", shares: 0 }])
+              setSlicerOwners([...slicerOwners, { account: "", shares: 0 }])
             }
             className="mr-3 opacity-75 cursor-pointer group-hover:opacity-100"
           />
           <p
             className="font-medium opacity-75 cursor-pointer group-hover:opacity-100"
             onClick={() =>
-              setSlicerOwners([...slicerOwners, { address: "", shares: 0 }])
+              setSlicerOwners([...slicerOwners, { account: "", shares: 0 }])
             }
           >
             Add owner

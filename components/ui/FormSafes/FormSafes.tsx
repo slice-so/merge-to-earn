@@ -32,7 +32,7 @@ const FormSafes = ({
       <div>
         <InputSelect
           label="Gnosis safe address"
-          genericText="Pick one of the safes you own"
+          genericText="Pick one of your safes"
           helpText={
             <>
               If you haven&apos;t created one for your project yet, you can do

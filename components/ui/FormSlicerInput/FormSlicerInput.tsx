@@ -19,13 +19,13 @@ const FormSlicerInput = ({
   setSlicerOwners,
   placeholder = "1000000"
 }: Props) => {
-  const { address, shares: sharesAmount } = slicerOwners[index]
+  const { account, shares: sharesAmount } = slicerOwners[index]
 
   const [resolvedAddress, setResolvedAddress] = useState("")
 
   const handleChangeAddress = (address: string) => {
     let items = [...slicerOwners]
-    items[index].address = address
+    items[index].account = address
     setSlicerOwners(items)
   }
 
@@ -50,7 +50,7 @@ const FormSlicerInput = ({
       </div>
       <div className="col-span-7 xs:col-span-5 md:col-span-7">
         <InputAddress
-          address={address}
+          address={account}
           onChange={handleChangeAddress}
           required={sharesAmount != 0}
           resolvedAddress={resolvedAddress}
@@ -68,7 +68,7 @@ const FormSlicerInput = ({
           max="1000000000"
           error={sharesAmount > 1000000000}
           value={sharesAmount != 0 ? sharesAmount : ""}
-          required={address && true}
+          required={account && true}
           onChange={handleChangeShares}
         />
       </div>

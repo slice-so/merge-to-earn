@@ -8,25 +8,31 @@ import {
 import handleMessage, { Message } from "@utils/handleMessage"
 import { ethers } from "ethers"
 import { useEffect, useState } from "react"
-import { useSignMessage } from "wagmi"
+import {
+  useContractWrite,
+  usePrepareContractWrite,
+  useSignMessage
+} from "wagmi"
 import { useAppContext } from "../context"
 import { SlicerOwner } from "../FormSlicer/FormSlicer"
+import sliceCore from "abi/SliceCore.json"
+import launchConfetti from "@utils/launchConfetti"
 
 const Main = () => {
-  const { account } = useAppContext()
-  const baseUrl = `https://safe-transaction.${process.env.NEXT_PUBLIC_ENV}.gnosis.io`
+  const { account, setModalView } = useAppContext()
+  // const baseUrl = `https://safe-transaction.${process.env.NEXT_PUBLIC_ENV}.gnosis.io`
+  const baseUrl = `https://safe-transaction-${process.env.NEXT_PUBLIC_ENV}.safe.global` // temp endpoint?
   const delegateAddress = process.env.NEXT_PUBLIC_DELEGATE
 
-  const [delegateSuccess, setDelegateSuccess] = useState(false)
   const [loading, setLoading] = useState(false)
-  const [success, setSuccess] = useState(false)
+  const [uploadStep, setUploadStep] = useState(0)
   const [message, setMessage] = useState<Message>()
 
   const [safeAddress, setSafeAddress] = useState("")
   const [slicerOwners, setSlicerOwners] = useState<SlicerOwner[]>([])
   const [currencies, setCurrencies] = useState<string[]>([])
 
-  const { data, isLoading, isSuccess, signMessage } = useSignMessage({
+  const { data, isLoading, isSuccess, signMessageAsync } = useSignMessage({
     message: ethers.utils.arrayify(
       ethers.utils.keccak256(
         Buffer.from(
@@ -37,8 +43,31 @@ const Main = () => {
     )
   })
 
+  // TODO: Fix errors when missing params
+  const { config } = usePrepareContractWrite({
+    addressOrName: process.env.NEXT_PUBLIC_SLICECORE,
+    contractInterface: sliceCore.abi,
+    functionName: "slice",
+    chainId: process.env.NEXT_PUBLIC_ENV == "goerli" ? 5 : 1,
+    args: [
+      {
+        payees: slicerOwners.map((el) => {
+          el["transfersAllowedWhileLocked"] = false
+          return el
+        }),
+        minimumShares: 1,
+        currencies,
+        releaseTimelock: 0,
+        transferTimelock: 0,
+        controller: safeAddress || ethers.constants.AddressZero,
+        slicerFlags: 6,
+        sliceCoreFlags: 4
+      }
+    ]
+  })
+  const { writeAsync: sliceWriteAsync } = useContractWrite(config)
+
   const addDelegate = async (signature: string) => {
-    setLoading(true)
     try {
       const body = {
         headers: { "Content-type": "application/json" },
@@ -54,19 +83,42 @@ const Main = () => {
 
       const res = await fetch(`${baseUrl}/api/v1/delegates/`, body)
 
-      if (res.status == 201) {
-        setDelegateSuccess(true)
-      } else {
+      if (res.status != 201) {
         const errorMessage = Object.values(await res.json())[0][0]
+        console.log(await res.json())
 
         handleMessage(
           { message: errorMessage, messageStatus: "error" },
           setMessage
         )
       }
-    } catch (error) {
-      console.log(error.message)
+    } catch (error) {}
+  }
+
+  const submit = async (e: React.SyntheticEvent<EventTarget>) => {
+    e.preventDefault()
+    setMessage(null)
+    setLoading(true)
+    setUploadStep(1)
+
+    try {
+      const res = await signMessageAsync()
+      if (!res) {
+        setUploadStep(3) // fail
+      } else {
+        setUploadStep(2)
+
+        // Create slicer
+        await sliceWriteAsync()
+        launchConfetti()
+
+        setUploadStep(4)
+      }
+    } catch (err) {
+      setUploadStep(3)
+      console.log(err.message)
     }
+
     setLoading(false)
   }
 
@@ -76,17 +128,23 @@ const Main = () => {
     }
   }, [data])
 
-  const submit = (e: React.SyntheticEvent<EventTarget>) => {
-    e.preventDefault()
-    setMessage(null)
-    signMessage()
-  }
+  useEffect(() => {
+    if (uploadStep != 0) {
+      setModalView({
+        name: `SETUP`,
+        params: {
+          uploadStep,
+          setModalView
+        }
+      })
+    }
+  }, [loading, uploadStep])
 
   return (
     <ConnectBlock>
       <form
         className="w-full mx-auto space-y-8 max-w-screen-xs"
-        onSubmit={(e) => submit(e)}
+        onSubmit={submit}
       >
         <FormSafes
           baseUrl={baseUrl}
@@ -100,7 +158,7 @@ const Main = () => {
             label="Slicer settings"
             content={
               <FormSlicer
-                success={success}
+                success={uploadStep == 4}
                 slicerOwners={slicerOwners}
                 setSlicerOwners={setSlicerOwners}
                 currencies={currencies}

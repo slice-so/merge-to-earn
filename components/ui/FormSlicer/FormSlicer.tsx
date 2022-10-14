@@ -124,6 +124,13 @@ const FormSlicer = ({
             Add owner
           </p>
         </div>
+        {totalShares > 1000000 && (
+          <p className="pt-6 text-sm font-semibold text-yellow-600">
+            Slicers have a limit of 4B total slices. To keep enough as future
+            rewards for contributors, consider not exceeding 1M of total slices
+            at this stage.
+          </p>
+        )}
       </div>
       <FormSlicerCurrencies
         currencies={currencies}

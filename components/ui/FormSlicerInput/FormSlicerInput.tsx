@@ -65,8 +65,8 @@ const FormSlicerInput = ({
           type="number"
           placeholder={placeholder}
           min="1"
-          max="1000000000"
-          error={sharesAmount > 1000000000}
+          max="1000000"
+          error={sharesAmount > 1000000}
           value={sharesAmount != 0 ? sharesAmount : ""}
           required={account && true}
           onChange={handleChangeShares}

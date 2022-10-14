@@ -12,7 +12,7 @@ h3 {
 }
 
 a {
-  @apply cursor-pointer font-medium text-black hover:text-blue-600 dark:hover:text-blue-300;
+  @apply cursor-pointer font-medium text-black hover:text-blue-600 dark:hover:text-blue-400;
   text-decoration: none;
 }
 
@@ -29,5 +29,5 @@ a {
 }
 
 .dark .highlight {
-  text-decoration-color: theme("colors.blue.300");
+  text-decoration-color: theme("colors.blue.400");
 }

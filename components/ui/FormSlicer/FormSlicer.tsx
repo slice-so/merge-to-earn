@@ -51,6 +51,22 @@ const FormSlicer = ({
   return (
     <div className="space-y-10">
       <div className="pt-6 text-left">
+        <div className="pb-6 text-sm text-gray-500">
+          <p>
+            The slicer will split any payment received to the project&apos;s
+            contributors. As such the funds related to the project should be
+            directed to its address. Learn more on{" "}
+            <a
+              className="text-gray-500 highlight"
+              href="https://slice.so"
+              target="_blank"
+              rel="noreferrer"
+            >
+              slice.so
+            </a>
+            .
+          </p>
+        </div>
         <div className="pb-3">
           <p className="pb-1 font-semibold">Initial slicer owners</p>
           <p className="text-sm text-gray-500">
@@ -115,17 +131,17 @@ const FormSlicer = ({
         <div className="mt-4 xs:mt-6 inline-flex ml-[9px] text-green-500 group">
           <Add
             onClick={() => handleAddOwner()}
-            className="mr-3 opacity-75 cursor-pointer group-hover:opacity-100"
+            className="mr-3 cursor-pointer opacity-80 group-hover:opacity-100"
           />
           <p
-            className="font-medium opacity-75 cursor-pointer group-hover:opacity-100"
+            className="font-medium cursor-pointer opacity-80 group-hover:opacity-100"
             onClick={() => handleAddOwner()}
           >
             Add owner
           </p>
         </div>
         {totalShares > 1000000 && (
-          <p className="pt-6 text-sm font-semibold text-yellow-600">
+          <p className="pt-6 text-sm font-medium text-yellow-600">
             Slicers have a limit of 4B total slices. To keep enough as future
             rewards for contributors, consider not exceeding 1M of total slices
             at this stage.

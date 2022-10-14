@@ -86,7 +86,7 @@ export const SETUP = (params: any) => {
             />
           </>
         ) : (
-          <p className="max-w-sm mx-auto text-sm font-semibold text-yellow-600">
+          <p className="max-w-sm mx-auto text-sm font-medium text-yellow-600">
             Wait until the process is completed
           </p>
         )}

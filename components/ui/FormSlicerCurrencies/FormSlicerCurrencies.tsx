@@ -37,18 +37,18 @@ const FormSlicerCurrencies = ({ currencies, setCurrencies }: Props) => {
       <div className="mt-4 inline-flex ml-[9px] text-green-500 group">
         <Add
           onClick={() => setCurrencies([...currencies, ""])}
-          className="mr-3 opacity-75 cursor-pointer group-hover:opacity-100"
+          className="mr-3 cursor-pointer opacity-80 group-hover:opacity-100"
         />
         <p
-          className="font-medium opacity-75 cursor-pointer group-hover:opacity-100"
+          className="font-medium cursor-pointer opacity-80 group-hover:opacity-100"
           onClick={() => setCurrencies([...currencies, ""])}
         >
           Add currency
         </p>
       </div>
       {currencies.length != 0 && (
-        <p className="pt-6 text-sm font-semibold text-yellow-600">
-          Each additional currency slightly increases the gas costs on PR merge.
+        <p className="pt-6 text-sm font-medium text-yellow-600">
+          Note: Each currency slightly increases the gas costs on PR merge.
         </p>
       )}
     </div>

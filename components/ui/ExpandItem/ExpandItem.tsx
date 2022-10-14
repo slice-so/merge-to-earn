@@ -20,7 +20,7 @@ const ExpandItem = ({
   return (
     <>
       <div
-        className={`flex items-center pt-5 border-b-2 border-blue-600 cursor-pointer group ${wrapperClassName}`}
+        className={`flex items-center pt-5 border-b-2 nightwind-prevent border-blue-600 cursor-pointer group ${wrapperClassName}`}
         onClick={() => setShowAnswer((showAnswer) => !showAnswer)}
         id={id}
       >

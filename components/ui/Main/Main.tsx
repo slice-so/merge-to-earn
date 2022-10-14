@@ -204,8 +204,8 @@ const Main = () => {
         <div className="pt-6">
           <p className="pb-6 text-sm text-gray-500">
             Proceed to create a slicer controlled by the chosen Gnosis safe, and
-            delegate the safe to &quot;Merge to earn&quot; so that it can create
-            proposals when pull requests are merged.
+            delegate &quot;Merge to earn&quot; to propose safe transactions when
+            pull requests are merged.
           </p>
           <Button
             type="submit"

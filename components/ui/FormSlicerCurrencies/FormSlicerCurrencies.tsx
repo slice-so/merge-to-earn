@@ -46,6 +46,11 @@ const FormSlicerCurrencies = ({ currencies, setCurrencies }: Props) => {
           Add currency
         </p>
       </div>
+      {currencies.length != 0 && (
+        <p className="pt-6 text-sm font-semibold text-yellow-600">
+          Each additional currency slightly increases the gas costs on PR merge.
+        </p>
+      )}
     </div>
   )
 }

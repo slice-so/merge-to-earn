@@ -23,11 +23,11 @@ a {
 .highlight {
   text-decoration-line: underline;
   text-decoration-style: solid;
-  text-decoration-color: theme("colors.blue.600");
+  text-decoration-color: theme("colors.blue.600") !important;
   text-decoration-thickness: 2px;
   text-underline-offset: 1px;
 }
 
 .dark .highlight {
-  text-decoration-color: theme("colors.blue.400");
+  text-decoration-color: theme("colors.blue.400") !important;
 }

@@ -130,18 +130,21 @@ const Main = () => {
           `Create slicer`,
           addRecentTransaction
         )
+        if (receipt) {
+          const eventLogs: LogDescription[] = receipt?.logs.map((log) =>
+            contract.interface.parseLog(log)
+          )
+          const tokenId = eventLogs?.find((log) => log.name === "TokenSliced")
+            .args.tokenId
 
-        const eventLogs: LogDescription[] = receipt?.logs.map((log) =>
-          contract.interface.parseLog(log)
-        )
-        const tokenId = eventLogs?.find((log) => log.name === "TokenSliced")
-          .args.tokenId
+          setSlicerId(Number(tokenId))
 
-        setSlicerId(Number(tokenId))
+          launchConfetti()
 
-        launchConfetti()
-
-        setUploadStep(4)
+          setUploadStep(4)
+        } else {
+          setUploadStep(3) // fail
+        }
       }
     } catch (err) {
       setUploadStep(3)

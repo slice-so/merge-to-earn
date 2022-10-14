@@ -43,6 +43,13 @@ const Main = () => {
     )
   })
 
+  const payees = slicerOwners
+    .filter((el) => el.account && el.shares > 0)
+    .map((el) => {
+      el["transfersAllowedWhileLocked"] = false
+      return el
+    })
+
   // TODO: Fix errors when missing params
   const { config } = usePrepareContractWrite({
     addressOrName: process.env.NEXT_PUBLIC_SLICECORE,
@@ -51,15 +58,12 @@ const Main = () => {
     chainId: process.env.NEXT_PUBLIC_ENV == "goerli" ? 5 : 1,
     args: [
       {
-        payees: slicerOwners.map((el) => {
-          el["transfersAllowedWhileLocked"] = false
-          return el
-        }),
+        payees,
         minimumShares: 1,
-        currencies,
+        currencies: currencies.filter((el) => el),
         releaseTimelock: 0,
         transferTimelock: 0,
-        controller: safeAddress || ethers.constants.AddressZero,
+        controller: safeAddress || account, // use account to prevent triggering console errors before safe is set
         slicerFlags: 6,
         sliceCoreFlags: 4
       }

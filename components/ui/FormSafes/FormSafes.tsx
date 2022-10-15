@@ -31,8 +31,8 @@ const FormSafes = ({
     <div className="space-y-6">
       <div>
         <InputSelect
-          label="Gnosis safe address"
-          genericText="Pick one of your safes"
+          label="Gnosis Safe address"
+          genericText="Pick one of your Safes"
           helpText={
             <>
               If you haven&apos;t created one for your project yet, you can do
@@ -43,21 +43,21 @@ const FormSafes = ({
                 rel="noreferrer"
                 className="text-gray-500 highlight"
               >
-                Gnosis safe app
+                Gnosis Safe app
               </a>
             </>
           }
           question={
             <>
               <p>
-                The chosen safe will approve the slices to be minted for each
+                The chosen Safe will approve the slices to be minted for each
                 PR, so in most cases should be owned by the project&apos;s
                 maintainers.
               </p>
 
               <p>
-                As the slicer controller, the safe can choose which currencies
-                the slicer should accept besides ETH, or sell products on its
+                As the Slicer controller, the Safe can choose which currencies
+                the Slicer should accept besides ETH, or sell products on its
                 decentralized storefront.
               </p>
             </>

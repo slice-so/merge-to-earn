@@ -13,7 +13,7 @@ const FormSlicerCurrencies = ({ currencies, setCurrencies }: Props) => {
       <div className="pb-3">
         <p className="pb-1 font-semibold">Accepted currencies</p>
         <p className="text-sm text-gray-500">
-          Choose which ERC20 currencies the slicer should accept besides ETH.
+          Choose which ERC20 currencies the Slicer should accept besides ETH.
         </p>
       </div>
 

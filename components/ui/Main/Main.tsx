@@ -203,13 +203,13 @@ const Main = () => {
 
         <div className="pt-6">
           <p className="pb-6 text-sm text-gray-500">
-            Proceed to create a slicer controlled by the chosen Gnosis safe, and
-            delegate &quot;Merge to earn&quot; to propose safe transactions when
+            Proceed to create a Slicer controlled by the chosen Gnosis Safe, and
+            delegate &quot;Merge to earn&quot; to create Safe proposals when
             pull requests are merged.
           </p>
           <Button
             type="submit"
-            label="Set up slicer and safe"
+            label="Set up Slicer and Safe"
             loading={isLoading || loading}
           />
         </div>

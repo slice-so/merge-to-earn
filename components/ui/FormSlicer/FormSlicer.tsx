@@ -53,9 +53,9 @@ const FormSlicer = ({
       <div className="pt-6 text-left">
         <div className="pb-6 text-sm text-gray-500">
           <p>
-            The slicer will split any payment received to the project&apos;s
-            contributors. As such the funds related to the project should be
-            directed to its address. Learn more on{" "}
+            The Slicer will split any payment received to the project&apos;s
+            contributors, so earnings related to the project should be directed
+            to its address. Learn more on{" "}
             <a
               className="text-gray-500 highlight"
               href="https://slice.so"
@@ -68,9 +68,9 @@ const FormSlicer = ({
           </p>
         </div>
         <div className="pb-3">
-          <p className="pb-1 font-semibold">Initial slicer owners</p>
+          <p className="pb-1 font-semibold">Initial Slicer owners</p>
           <p className="text-sm text-gray-500">
-            Pick the initial owners of the slicer.
+            Pick the initial owners of the Slicer.
           </p>
         </div>
         <div className="grid items-center grid-cols-8 text-left xs:grid-cols-10 md:grid-cols-12 gap-x-4 gap-y-3 xs:gap-y-4">
@@ -85,7 +85,7 @@ const FormSlicer = ({
                   text={
                     <>
                       <p>
-                        Slices 🍰 represent ownership over a slicer and its
+                        Slices 🍰 represent ownership over a Slicer and its
                         earnings.
                       </p>
                       <p>
@@ -95,7 +95,7 @@ const FormSlicer = ({
                           <>
                             With the current setup,{" "}
                             <b>
-                              1 Slice ={" "}
+                              1 slice ={" "}
                               {Math.floor((1 / totalShares) * 1000000000) /
                                 10000000}
                               %

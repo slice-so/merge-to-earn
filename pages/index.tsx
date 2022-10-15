@@ -12,7 +12,7 @@ export default function Home() {
   return (
     <>
       <NextSeo
-        title="My website"
+        title={defaultTitle}
         openGraph={{
           title: longTitle,
           description: defaultDescription,
@@ -39,7 +39,7 @@ export default function Home() {
               />
             </div>
             <p className="pt-3 font-bold text-gray-500 xs:text-lg">
-              The ideal reward system for open source development
+              The best reward system for open source development
             </p>
           </div>
 
@@ -54,10 +54,13 @@ export default function Home() {
               >
                 Github action
               </a>{" "}
-              to automatically reward contributors with a slice of ownership of
-              the project they contributed to, when a PR is merged.
+              to automate rewarding contributors with a slice of ownership over
+              a project and its earnings, when merging pull requests are merged.
             </p>
-            <p>Use this app to set up a slicer and safe for your repository.</p>
+            <p>
+              Use this app to set up a Slicer and Gnosis Safe for your
+              repository.
+            </p>
           </div>
           <Main />
         </main>

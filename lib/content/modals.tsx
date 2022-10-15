@@ -13,10 +13,10 @@ export const SETUP = (params: any) => {
   let uploadState: string
   switch (uploadStep) {
     case 1:
-      uploadState = "Delegating safe ..."
+      uploadState = "Delegating Safe ..."
       break
     case 2:
-      uploadState = "Creating slicer ..."
+      uploadState = "Creating Slicer ..."
       break
     case 3:
       uploadState = "Something went wrong"

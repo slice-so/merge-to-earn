@@ -4,10 +4,11 @@ import { DefaultSeo } from "next-seo"
 import { accounts } from "@components/ui/Social/Social"
 import Script from "next/script"
 
-export const defaultTitle = "My website"
-export const longTitle = "My website – The best website ever"
+export const defaultTitle = "Merge to earn"
+export const longTitle =
+  "Merge to earn – The best reward system for open source development"
 export const defaultDescription =
-  "You have stumbled upon the best website ever. Well done!"
+  "Merge to earn is a Github action to automate rewarding contributors with a slice of ownership over a project and its earnings, when pull requests are merged."
 export const domain = process.env.NEXT_PUBLIC_APP_URL
 const twitterAccount = accounts.twitter.split("twitter.com/").pop()
 

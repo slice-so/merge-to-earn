@@ -55,7 +55,6 @@ const Main = () => {
       return el
     })
 
-  // TODO: Fix errors when missing params
   const { config } = usePrepareContractWrite({
     addressOrName: process.env.NEXT_PUBLIC_SLICECORE,
     contractInterface: sliceCore.abi,

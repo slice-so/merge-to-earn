@@ -45,17 +45,17 @@ export default function Home() {
 
           <div className="mx-auto prose text-left max-w-screen-xs">
             <p>
-              Merge to earn is a{" "}
               <a
                 href={accounts["github"]}
                 target="_blank"
                 rel="noreferrer"
                 className="highlight"
               >
-                Github action
+                Merge to earn
               </a>{" "}
-              to automate rewarding contributors with a slice of ownership over
-              a project and its earnings, when merging pull requests are merged.
+              is a Github action to automate rewarding contributors with a slice
+              of ownership over a project and its earnings, when pull requests
+              are merged.
             </p>
             <p>
               Use this app to set up a Slicer and Gnosis Safe for your

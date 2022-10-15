@@ -7,5 +7,5 @@ The companion app is used to set up the "Merge to earn" Github action, by:
 
 ### Learn more
 
-- [Merge to earn - Github action](slice.so)
+- [Merge to earn - Github action](...)
 - [Slice protocol](slice.so)

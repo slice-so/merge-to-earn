@@ -20,7 +20,7 @@ const FormSafes = ({
 }: Props) => {
   const { account } = useAppContext()
   const { data: ownedSafes } = useSWR(
-    account ? `${baseUrl}/api/v1/owners/${account}/safes` : null,
+    account ? `${baseUrl}api/v1/owners/${account}/safes` : null,
     fetcher
   )
   const formattedOwnedSafes = ownedSafes?.safes.map((el: string) => ({

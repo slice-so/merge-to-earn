@@ -24,8 +24,11 @@ import { LogDescription } from "ethers/lib/utils"
 const Main = () => {
   const { account, setModalView } = useAppContext()
   const addRecentTransaction = useAddRecentTransaction()
-  // const baseUrl = `https://safe-transaction.${process.env.NEXT_PUBLIC_ENV}.gnosis.io`
-  const baseUrl = `https://safe-transaction-${process.env.NEXT_PUBLIC_ENV}.safe.global` // temp endpoint?
+  const env = process.env.NEXT_PUBLIC_ENV
+  const baseUrl =
+    env == "mainnet"
+      ? `https://safe-transaction.${env}.gnosis.io/`
+      : `https://safe-transaction-${env}.safe.global/`
   const delegateAddress = process.env.NEXT_PUBLIC_DELEGATE
 
   const [loading, setLoading] = useState(false)
@@ -89,7 +92,7 @@ const Main = () => {
         method: "POST"
       }
 
-      const res = await fetch(`${baseUrl}/api/v1/delegates/`, body)
+      const res = await fetch(`${baseUrl}api/v1/delegates/`, body)
 
       if (res.status != 201) {
         const errorMessage = Object.values(await res.json())[0][0]

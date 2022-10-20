@@ -2,6 +2,7 @@ import {
   Button,
   ConnectBlock,
   ExpandItem,
+  FormGithub,
   FormSafes,
   FormSlicer
 } from "@components/ui"
@@ -20,6 +21,8 @@ import launchConfetti from "@utils/launchConfetti"
 import executeTransaction from "@utils/executeTransaction"
 import { useAddRecentTransaction } from "@rainbow-me/rainbowkit"
 import { LogDescription } from "ethers/lib/utils"
+
+import { useSession, signIn } from "next-auth/react"
 
 const Main = () => {
   const { account, setModalView } = useAppContext()
@@ -175,48 +178,55 @@ const Main = () => {
     }
   }, [loading, uploadStep, slicerId])
 
-  return (
-    <ConnectBlock>
-      <form
-        className="w-full mx-auto space-y-8 max-w-screen-xs"
-        onSubmit={submit}
-      >
-        <FormSafes
-          baseUrl={baseUrl}
-          safeAddress={safeAddress}
-          setSafeAddress={setSafeAddress}
-          message={message}
-        />
+  const { data: session } = useSession()
 
-        <div>
-          <ExpandItem
-            label="Slicer settings"
-            content={
-              <FormSlicer
-                success={uploadStep == 4}
-                slicerOwners={slicerOwners}
-                setSlicerOwners={setSlicerOwners}
-                currencies={currencies}
-                setCurrencies={setCurrencies}
-              />
-            }
+  return session ? (
+    <>
+      <FormGithub session={session} />
+      <ConnectBlock>
+        <form
+          className="w-full mx-auto space-y-8 max-w-screen-xs"
+          onSubmit={submit}
+        >
+          <FormSafes
+            baseUrl={baseUrl}
+            safeAddress={safeAddress}
+            setSafeAddress={setSafeAddress}
+            message={message}
           />
-        </div>
 
-        <div className="pt-6">
-          <p className="pb-6 text-sm text-gray-500">
-            Proceed to create a Slicer controlled by the chosen Gnosis Safe, and
-            delegate &quot;Merge to earn&quot; to create Safe proposals when
-            pull requests are merged.
-          </p>
-          <Button
-            type="submit"
-            label="Set up Slicer and Safe"
-            loading={isLoading || loading}
-          />
-        </div>
-      </form>
-    </ConnectBlock>
+          <div>
+            <ExpandItem
+              label="Slicer settings"
+              content={
+                <FormSlicer
+                  success={uploadStep == 4}
+                  slicerOwners={slicerOwners}
+                  setSlicerOwners={setSlicerOwners}
+                  currencies={currencies}
+                  setCurrencies={setCurrencies}
+                />
+              }
+            />
+          </div>
+
+          <div className="pt-6">
+            <p className="pb-6 text-sm text-gray-500">
+              Proceed to create a Slicer controlled by the chosen Gnosis Safe,
+              and delegate &quot;Merge to earn&quot; to create Safe proposals
+              when pull requests are merged.
+            </p>
+            <Button
+              type="submit"
+              label="Set up Slicer and Safe"
+              loading={isLoading || loading}
+            />
+          </div>
+        </form>
+      </ConnectBlock>
+    </>
+  ) : (
+    <Button label="Sign in with Github" onClick={() => signIn("github")} />
   )
 }
 

@@ -17,6 +17,7 @@
     "click-to-react-component": "^1.0.8",
     "ethers": "^5.7.1",
     "next": "^12.3.1",
+    "next-auth": "^4.14.0",
     "next-seo": "^5.5.0",
     "next-themes": "^0.2.1",
     "postcss": "^8.4.18",

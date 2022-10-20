@@ -23,6 +23,8 @@ import { useAddRecentTransaction } from "@rainbow-me/rainbowkit"
 import { LogDescription } from "ethers/lib/utils"
 import { GithubCircle } from "@components/icons/Social"
 import { signIn, useSession } from "next-auth/react"
+import fetcher from "@utils/fetcher"
+import useSWR from "swr"
 
 const Main = () => {
   const { data: session } = useSession()
@@ -39,7 +41,7 @@ const Main = () => {
   const [uploadStep, setUploadStep] = useState(0)
   const [message, setMessage] = useState<Message>()
 
-  const [repo, setRepo] = useState("")
+  const [repoId, setRepoId] = useState("")
   const [safeAddress, setSafeAddress] = useState("")
   const [slicerOwners, setSlicerOwners] = useState<SlicerOwner[]>([])
   const [currencies, setCurrencies] = useState<string[]>([])
@@ -101,7 +103,6 @@ const Main = () => {
 
       if (res.status != 201) {
         const errorMessage = Object.values(await res.json())[0][0]
-        console.log(await res.json())
 
         handleMessage(
           { message: errorMessage, messageStatus: "error" },
@@ -149,13 +150,29 @@ const Main = () => {
           launchConfetti()
 
           setUploadStep(4)
+
+          const body = {
+            headers: { "Content-type": "application/json" },
+            body: JSON.stringify({
+              token: session.accessToken,
+              repoId,
+              slicerId: Number(tokenId),
+              safeAddress
+            }),
+            method: "POST"
+          }
+          const res = await fetch("/api/connection/create", body)
+          if (res.status == 200) {
+            setUploadStep(5)
+          } else {
+            setUploadStep(3) // fail
+          }
         } else {
           setUploadStep(3) // fail
         }
       }
     } catch (err) {
       setUploadStep(3)
-      console.log(err.message)
     }
 
     setLoading(false)
@@ -180,11 +197,21 @@ const Main = () => {
     }
   }, [loading, uploadStep, slicerId])
 
+  const { data: isFreeRepo } = useSWR(
+    repoId ? `/api/connection/get?repoId=${repoId}` : null,
+    fetcher
+  )
+
   return session ? (
     <div className="w-full mx-auto space-y-8 max-w-screen-xs">
-      <FormGithub repo={repo} setRepo={setRepo} />
+      <FormGithub repoId={repoId} setRepoId={setRepoId} />
+      {isFreeRepo && (
+        <p className="font-medium text-yellow-600">
+          This repo has already been set up
+        </p>
+      )}
       <form className="space-y-8" onSubmit={submit}>
-        {repo && (
+        {repoId && !isFreeRepo && (
           <ConnectBlock>
             <FormSafes
               baseUrl={baseUrl}

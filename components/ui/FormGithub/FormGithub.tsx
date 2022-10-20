@@ -5,11 +5,11 @@ import { Dispatch, SetStateAction } from "react"
 import useSWR from "swr"
 
 type Props = {
-  repo: string
-  setRepo: Dispatch<SetStateAction<string>>
+  repoId: string
+  setRepoId: Dispatch<SetStateAction<string>>
 }
 
-const FormGithub = ({ repo, setRepo }: Props) => {
+const FormGithub = ({ repoId, setRepoId }: Props) => {
   const { data: session } = useSession()
   const { data: repoList } = useSWR(
     session?.accessToken
@@ -18,14 +18,12 @@ const FormGithub = ({ repo, setRepo }: Props) => {
     fetcher
   )
 
-  const availableRepos = repoList?.data?.installations?.map((el: any) => ({
+  const availableRepos = repoList?.installations?.map((el: any) => ({
     value: el.id,
     name: el.app_slug
   }))
 
-  // TODO: Add check if repo already has been set up for mte
-
-  return repoList?.data.total_count == 0 ? (
+  return repoList?.total_count == 0 ? (
     <div>
       <p className="pb-4 font-medium">
         You still have to install Merge to earn on your repositories
@@ -52,8 +50,8 @@ const FormGithub = ({ repo, setRepo }: Props) => {
             Install on more repos
           </a>
         }
-        value={repo}
-        setValue={setRepo}
+        value={repoId}
+        setValue={setRepoId}
         options={availableRepos}
       />
     </>

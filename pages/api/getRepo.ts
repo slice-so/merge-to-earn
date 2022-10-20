@@ -13,7 +13,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     method: "GET"
   }
   const data = await fetcher("https://api.github.com/user/installations", body)
-  res.status(200).json({ data })
+  res.status(200).json(data)
 }
 
 export default handler

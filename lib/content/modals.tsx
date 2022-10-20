@@ -22,7 +22,10 @@ export const SETUP = (params: any) => {
       uploadState = "Something went wrong"
       break
     case 4:
-      uploadState = "Success"
+      uploadState = "Finalizing"
+      break
+    case 5:
+      uploadState = "Finalized"
       break
   }
   return (
@@ -61,6 +64,13 @@ export const SETUP = (params: any) => {
               "Reverted"
             )
           }
+        />
+        <LoadingStep
+          nullCondition={uploadStep < 3}
+          initCondition={uploadStep == 4}
+          uploadState={uploadState}
+          waitingState="Finalization"
+          endState={uploadStep != 3 ? "Repo set up" : "Reverted"}
         />
       </div>
       <div className="pt-8">

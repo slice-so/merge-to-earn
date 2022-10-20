@@ -39,7 +39,7 @@ const Main = () => {
   const delegateAddress = process.env.NEXT_PUBLIC_DELEGATE
 
   const [loading, setLoading] = useState(false)
-  const [uploadStep, setUploadStep] = useState(0)
+  const [uploadStep, setUploadStep] = useState(5)
   const [message, setMessage] = useState<Message>()
 
   const [repoId, setRepoId] = useState("")
@@ -132,7 +132,7 @@ const Main = () => {
     try {
       const res = await signMessageAsync()
       if (!res) {
-        setUploadStep(3) // fail
+        setUploadStep(4) // fail
       } else {
         setUploadStep(2)
 
@@ -159,7 +159,7 @@ const Main = () => {
 
           launchConfetti()
 
-          setUploadStep(4)
+          setUploadStep(3)
 
           const body = {
             headers: { "Content-type": "application/json" },
@@ -176,14 +176,14 @@ const Main = () => {
           if (res.status == 200) {
             setUploadStep(5)
           } else {
-            setUploadStep(3) // fail
+            setUploadStep(4) // fail
           }
         } else {
-          setUploadStep(3) // fail
+          setUploadStep(4) // fail
         }
       }
     } catch (err) {
-      setUploadStep(3)
+      setUploadStep(4)
     }
 
     setLoading(false)

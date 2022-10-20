@@ -39,7 +39,7 @@ const Main = () => {
   const delegateAddress = process.env.NEXT_PUBLIC_DELEGATE
 
   const [loading, setLoading] = useState(false)
-  const [uploadStep, setUploadStep] = useState(5)
+  const [uploadStep, setUploadStep] = useState(0)
   const [message, setMessage] = useState<Message>()
 
   const [repoId, setRepoId] = useState("")

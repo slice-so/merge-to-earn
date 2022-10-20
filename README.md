@@ -1,4 +1,4 @@
-# Merge to earn - Github app
+# Merge to earn app
 
 **Automate rewarding contributors with a slice of ownership over a project and its earnings.**
 

@@ -80,7 +80,7 @@ export const SETUP = (params: any) => {
               <p className="pb-6 text-sm xs:px-10">
                 Check out the{" "}
                 <a
-                  href="https://github.com/slice-so/merge-to-earn-app"
+                  href="https://github.com/slice-so/merge-to-earn-app#merge-to-earn-app"
                   target="_blank"
                   rel="noreferrer"
                   className="highlight"

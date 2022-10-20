@@ -2,7 +2,7 @@ import { Octokit } from "@octokit/core"
 import { restEndpointMethods } from "@octokit/plugin-rest-endpoint-methods"
 import { createAppAuth } from "@octokit/auth-app"
 
-export function getOctokit(installationId: number) {
+export function getOctokit(installationId: number | null = null) {
   const privateKey = Buffer.from(
     process.env.GH_APP_PRIVATE_KEY,
     "base64"

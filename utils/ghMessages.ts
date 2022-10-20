@@ -56,15 +56,15 @@ export async function onSlicesRequestMessage(
 
   for (let i = 0; i < newSplitText.length; i++) {
     const el: string = newSplitText[i]
-    const [address, sliceAmount] = el.split(":")
+    const [addressTt, sliceAmountTt] = el.split(":")
+    const address = addressTt.trim()
+    const sliceAmount = sliceAmountTt.trim()
     if (Number(sliceAmount)) {
       if (isValidAddress(address)) {
         const resolved = await resolveEnsForBot(address)
         if (resolved) {
           slicesToBeMinted += Number(sliceAmount)
-          resolvedArray.push(
-            "| " + resolved.trim() + " | " + sliceAmount.trim() + " |"
-          )
+          resolvedArray.push("| " + resolved + " | " + sliceAmount + " |")
         } else {
           return [
             "ENS not resolved to address.\n" + baseReviewMessage,
@@ -94,13 +94,15 @@ export async function onSlicesRequestMessage(
   return [
     "### Upcoming slice distribution: \n| Address | Slices |\n| --- | --- |\n" +
       resolvedArray.join(" \n ") +
-      "\n \n **Slices to be minted: **" +
+      "\n \n **Slices to be minted:** " +
       String(slicesToBeMinted) +
-      `(${
+      ` (${
         Math.floor(
           (slicesToBeMinted / (totalSlices + slicesToBeMinted)) * 100000
         ) / 1000
-      }% of ${formatNumber(totalSlices + slicesToBeMinted)} new total slices)`,
+      }% of ${formatNumber(
+        totalSlices + slicesToBeMinted
+      )} new **total slices**)`,
     isSuccess,
     totalSlices
   ]

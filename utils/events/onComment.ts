@@ -17,10 +17,11 @@ export default async function onComment(payload: IssueCommentEvent) {
 
   if (splitText[0].trim() === requiredText) {
     const author = payload.issue.user.login
+    // TODO use octokit request for private repos
     const comments = await fetcher(payload.issue.comments_url)
-    const firstBotComment = comments.find(
+    const pinnedBotComment = comments.find(
       (el: any) =>
-        el.user.login === "github-actions[bot]" &&
+        el.user.login === "merge-to-earn[bot]" &&
         el.body.includes(`### 👋 Gm @${author}`)
     )
 
@@ -42,16 +43,16 @@ export default async function onComment(payload: IssueCommentEvent) {
           botMessage
 
         // If there is a pinned comment
-        if (firstBotComment) {
+        if (pinnedBotComment) {
           editComment(
             payload.repository.owner.login,
             payload.repository.name,
-            firstBotComment.id,
+            pinnedBotComment.id,
             newFirstMessage,
             payload.installation.id
           )
         } else {
-          await controllerCheck(slicerId, safeAddress)
+          // await controllerCheck(slicerId, safeAddress)
           createComment(
             payload.repository.owner.login,
             payload.repository.name,
@@ -66,7 +67,7 @@ export default async function onComment(payload: IssueCommentEvent) {
         "User not authorized, only the PR owner can request slice distributions"
     }
     if (
-      firstBotComment ||
+      pinnedBotComment ||
       !botMessage.includes("### Upcoming slice distribution:")
     ) {
       createComment(

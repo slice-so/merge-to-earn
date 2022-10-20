@@ -35,7 +35,7 @@ const Navbar = () => {
             <ConnectButton showBalance={false} />
             {session && (
               <div
-                className="flex items-center h-10 gap-1 px-3 transition-transform duration-150 border border-white shadow-md cursor-pointer dark:border-gray-700 rounded-xl border-opacity-80 hover:scale-105"
+                className="flex items-center h-10 gap-1 px-3 transition-transform duration-150 bg-white border border-white shadow-md cursor-pointer nightwind-prevent rounded-xl border-opacity-80 hover:scale-105"
                 onClick={() => setShowDropdown(!showDropdown)}
               >
                 <Image
@@ -45,7 +45,7 @@ const Navbar = () => {
                   alt="Github avatar"
                   className="rounded-full"
                 />
-                <Chevron className="w-3 h-3 -rotate-90" />
+                <Chevron className="w-4 text-black -rotate-90 nightwind-prevent" />
               </div>
             )}
             {showDropdown && (

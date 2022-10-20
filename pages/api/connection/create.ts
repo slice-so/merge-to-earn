@@ -3,7 +3,7 @@ import fetcher from "@utils/fetcher"
 import type { NextApiRequest, NextApiResponse } from "next"
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  const { token, repoId, slicerId, safeAddress } = req.body
+  const { token, installationId, repoId, slicerId, safeAddress } = req.body
 
   try {
     const Authorization = "Bearer " + token
@@ -15,16 +15,15 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       method: "GET"
     }
     const repoData = await fetcher(
-      "https://api.github.com/user/installations",
+      `https://api.github.com/user/installations/${installationId}/repositories`,
       body
     )
 
     if (
-      repoData?.installations?.findIndex(
-        (el: any) => el.id == Number(repoId)
-      ) == -1
+      repoData?.repositories?.findIndex((el: any) => el.id == Number(repoId)) ==
+      -1
     ) {
-      throw Error("You don't own this repo")
+      throw Error("You haven't installed merge to earn on this repo")
     }
 
     const connectionData = await prisma.connection.create({

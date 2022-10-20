@@ -1,12 +1,8 @@
 import Link from "next/link"
-import { useRouter } from "next/router"
-// import { signIn, useSession } from "next-auth/client"
 import Logo from "@components/icons/Logo"
 import Nightwind from "@components/icons/Nightwind"
 import { Container } from "@components/ui"
 import { ConnectButton } from "@rainbow-me/rainbowkit"
-import { Github } from "@components/icons/Social"
-import { accounts } from "../Social/Social"
 import { useSession } from "next-auth/react"
 import Image from "next/future/image"
 import Chevron from "@components/icons/Chevron"
@@ -39,7 +35,7 @@ const Navbar = () => {
             <ConnectButton showBalance={false} />
             {session && (
               <div
-                className="flex items-center gap-1 px-2 py-1 border border-gray-200 rounded-sm cursor-pointer border-opacity-80 hover:bg-gray-100"
+                className="flex items-center h-10 gap-1 px-3 transition-transform duration-150 border border-white shadow-md cursor-pointer dark:border-gray-700 rounded-xl border-opacity-80 hover:scale-105"
                 onClick={() => setShowDropdown(!showDropdown)}
               >
                 <Image

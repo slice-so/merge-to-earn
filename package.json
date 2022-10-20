@@ -10,6 +10,9 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.7.3",
+    "@octokit/auth-app": "^4.0.7",
+    "@octokit/core": "^4.1.0",
+    "@octokit/plugin-rest-endpoint-methods": "^6.7.0",
     "@octokit/webhooks": "^10.3.0",
     "@rainbow-me/rainbowkit": "^0.7.1",
     "@types/node": "^18.8.5",

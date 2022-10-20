@@ -2,8 +2,10 @@ import { IssueCommentEvent } from "@octokit/webhooks-types"
 import { controllerCheck } from "@utils/controllerCheck"
 import fetcher from "@utils/fetcher"
 import { onPrOpenedMessage, onSlicesRequestMessage } from "@utils/ghMessages"
+import { createComment, editComment } from "@utils/ghHandler"
 
 export default async function onComment(payload: IssueCommentEvent) {
+  console.log("on comment ---------")
   // TODO change slicer and safe
   const slicerId = "1"
   const safeAddress = "0xA8a3763a206D99d3b8bEc94d336F43FdEC3fC6F8"
@@ -13,13 +15,9 @@ export default async function onComment(payload: IssueCommentEvent) {
   const splitText = text.split("-")
   let botMessage: string
 
-  const commentPayload = <IssueCommentEvent>payload // type casting
-  if (
-    splitText[0].trim() === requiredText &&
-    commentPayload.issue.state == "open"
-  ) {
-    const author = commentPayload.issue.user.login
-    const comments = await fetcher(commentPayload.issue.comments_url)
+  if (splitText[0].trim() === requiredText) {
+    const author = payload.issue.user.login
+    const comments = await fetcher(payload.issue.comments_url)
     const firstBotComment = comments.find(
       (el: any) =>
         el.user.login === "github-actions[bot]" &&
@@ -27,7 +25,7 @@ export default async function onComment(payload: IssueCommentEvent) {
     )
 
     // Check if comment's user is the PR owner
-    if (commentPayload.comment.user.id === commentPayload.issue.user.id) {
+    if (payload.comment.user.id === payload.issue.user.id) {
       // Set bot message to fire in create comment
       // m is defined based on success
       const [m, success, totalSlices] = await onSlicesRequestMessage(
@@ -45,10 +43,22 @@ export default async function onComment(payload: IssueCommentEvent) {
 
         // If there is a pinned comment
         if (firstBotComment) {
-          editComment(firstBotComment.id, newFirstMessage)
+          editComment(
+            payload.repository.owner.login,
+            payload.repository.name,
+            firstBotComment.id,
+            newFirstMessage,
+            payload.installation.id
+          )
         } else {
           await controllerCheck(slicerId, safeAddress)
-          createComment(commentPayload.issue.number, newFirstMessage)
+          createComment(
+            payload.repository.owner.login,
+            payload.repository.name,
+            payload.issue.number,
+            newFirstMessage,
+            payload.installation.id
+          )
         }
       }
     } else {
@@ -59,7 +69,13 @@ export default async function onComment(payload: IssueCommentEvent) {
       firstBotComment ||
       !botMessage.includes("### Upcoming slice distribution:")
     ) {
-      createComment(commentPayload.issue.number, botMessage)
+      createComment(
+        payload.repository.owner.login,
+        payload.repository.name,
+        payload.issue.number,
+        botMessage,
+        payload.installation.id
+      )
     }
   }
 }

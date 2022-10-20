@@ -1,38 +1,60 @@
-import { Button } from "@components/ui"
+import { Button, InputSelect } from "@components/ui"
 import fetcher from "@utils/fetcher"
 import { useSession } from "next-auth/react"
 import { Dispatch, SetStateAction } from "react"
 import useSWR from "swr"
 
-type Props = { setRepo: Dispatch<SetStateAction<string>> }
+type Props = {
+  repo: string
+  setRepo: Dispatch<SetStateAction<string>>
+}
 
-const FormGithub = ({ setRepo }: Props) => {
+const FormGithub = ({ repo, setRepo }: Props) => {
   const { data: session } = useSession()
-  const { data: repo } = useSWR(
+  const { data: repoList } = useSWR(
     session?.accessToken
       ? `https://a12a-2-38-25-82.eu.ngrok.io//api/getRepo?token=${session.accessToken}`
       : null,
     fetcher
   )
+  const availableRepos = repoList?.data?.installations?.map((el: any) => ({
+    value: el.app_slug
+  }))
 
-  return (
-    <div className="space-y-6">
-      {repo?.data.total_count == 0 ? (
-        <div>
-          <p className="pb-4 font-medium">
-            You still have to install Merge to earn on your repositories
-          </p>
-          <Button
-            type="button"
-            label="Install Merge to earn"
-            href="https://github.com/apps/merge-to-earn/installations/new/"
-            external
-          />
-        </div>
-      ) : (
-        <></>
-      )}
+  // TODO: Add check if repo already has been set up for mte
+
+  return repoList?.data.total_count == 0 ? (
+    <div>
+      <p className="pb-4 font-medium">
+        You still have to install Merge to earn on your repositories
+      </p>
+      <Button
+        type="button"
+        label="Install Merge to earn"
+        href="https://github.com/apps/merge-to-earn/installations/new/"
+        external
+      />
     </div>
+  ) : (
+    <>
+      <InputSelect
+        label="Repository"
+        genericText="Pick one of your repos"
+        labelAction={
+          <a
+            className="w-full text-sm text-right text-blue-600 hover:underline"
+            href="https://github.com/apps/merge-to-earn/installations/new/"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Install on more repos
+          </a>
+        }
+        value={repo}
+        setValue={setRepo}
+        options={availableRepos}
+      />
+    </>
   )
 }
 

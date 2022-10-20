@@ -181,12 +181,9 @@ const Main = () => {
   }, [loading, uploadStep, slicerId])
 
   return session ? (
-    <>
-      <FormGithub setRepo={setRepo} />
-      <form
-        className="w-full mx-auto space-y-8 max-w-screen-xs"
-        onSubmit={submit}
-      >
+    <div className="w-full mx-auto space-y-8 max-w-screen-xs">
+      <FormGithub repo={repo} setRepo={setRepo} />
+      <form className="space-y-8" onSubmit={submit}>
         {repo && (
           <ConnectBlock>
             <FormSafes
@@ -213,9 +210,9 @@ const Main = () => {
 
             <div className="pt-6">
               <p className="pb-6 text-sm text-gray-500">
-                Proceed to create a Slicer controlled by the chosen Gnosis Safe,
-                and delegate &quot;Merge to earn&quot; to create Safe proposals
-                when pull requests are merged.
+                Proceed to create a Slicer controlled by the Gnosis Safe, and
+                delegate &quot;Merge to earn&quot; to create Safe proposals when
+                pull requests are merged.
               </p>
               <Button
                 type="submit"
@@ -226,7 +223,7 @@ const Main = () => {
           </ConnectBlock>
         )}
       </form>
-    </>
+    </div>
   ) : (
     <Button
       label={

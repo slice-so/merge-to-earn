@@ -1,5 +1,5 @@
 import { NextSeo } from "next-seo"
-import { Button, Container, DoubleText, Main } from "@components/ui"
+import { Container, DoubleText, Main } from "@components/ui"
 import {
   defaultDescription,
   defaultTitle,
@@ -7,8 +7,6 @@ import {
   domain
 } from "@components/common/Head"
 import { accounts } from "@components/ui/Social/Social"
-import { GithubCircle } from "@components/icons/Social"
-import { signIn, useSession } from "next-auth/react"
 
 export default function Home() {
   return (
@@ -60,8 +58,7 @@ export default function Home() {
               merged.
             </p>
             <p>
-              Use this app to set up a Slicer and Gnosis Safe for your
-              repository.
+              Here you can set up a Slicer and Gnosis Safe for your repository.
             </p>
           </div>
           <Main />

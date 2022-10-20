@@ -17,8 +17,10 @@ const FormGithub = ({ repo, setRepo }: Props) => {
       : null,
     fetcher
   )
+
   const availableRepos = repoList?.data?.installations?.map((el: any) => ({
-    value: el.app_slug
+    value: el.id,
+    name: el.app_slug
   }))
 
   // TODO: Add check if repo already has been set up for mte

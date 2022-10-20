@@ -41,7 +41,7 @@ const FormSafes = ({
                 href="https://gnosis-safe.io/app"
                 target="_blank"
                 rel="noreferrer"
-                className="text-gray-500 highlight"
+                className="text-blue-600 hover:underline"
               >
                 Gnosis Safe app
               </a>

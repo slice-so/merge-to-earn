@@ -24,8 +24,7 @@ import { LogDescription } from "ethers/lib/utils"
 const Main = () => {
   const { account, setModalView } = useAppContext()
   const addRecentTransaction = useAddRecentTransaction()
-  // const baseUrl = `https://safe-transaction.${process.env.NEXT_PUBLIC_ENV}.gnosis.io`
-  const baseUrl = `https://safe-transaction-${process.env.NEXT_PUBLIC_ENV}.safe.global` // temp endpoint?
+  const baseUrl = `https://safe-transaction.${process.env.NEXT_PUBLIC_ENV}.gnosis.io`
   const delegateAddress = process.env.NEXT_PUBLIC_DELEGATE
 
   const [loading, setLoading] = useState(false)

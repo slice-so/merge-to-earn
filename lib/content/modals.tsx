@@ -1,4 +1,5 @@
 import { Button, DoubleText, LoadingStep } from "@components/ui"
+import { accounts } from "@components/ui/Social/Social"
 
 export type View = {
   name: ViewNames
@@ -80,7 +81,7 @@ export const SETUP = (params: any) => {
               <p className="pb-6 text-sm xs:px-10">
                 Check out the{" "}
                 <a
-                  href="https://github.com/slice-so/merge-to-earn-app#merge-to-earn-app"
+                  href={accounts.github + "#merge-to-earn-app"}
                   target="_blank"
                   rel="noreferrer"
                   className="highlight"

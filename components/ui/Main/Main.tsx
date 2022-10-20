@@ -21,10 +21,11 @@ import launchConfetti from "@utils/launchConfetti"
 import executeTransaction from "@utils/executeTransaction"
 import { useAddRecentTransaction } from "@rainbow-me/rainbowkit"
 import { LogDescription } from "ethers/lib/utils"
-
-import { useSession, signIn } from "next-auth/react"
+import { GithubCircle } from "@components/icons/Social"
+import { signIn, useSession } from "next-auth/react"
 
 const Main = () => {
+  const { data: session } = useSession()
   const { account, setModalView } = useAppContext()
   const addRecentTransaction = useAddRecentTransaction()
   const env = process.env.NEXT_PUBLIC_ENV
@@ -38,6 +39,7 @@ const Main = () => {
   const [uploadStep, setUploadStep] = useState(0)
   const [message, setMessage] = useState<Message>()
 
+  const [repo, setRepo] = useState("")
   const [safeAddress, setSafeAddress] = useState("")
   const [slicerOwners, setSlicerOwners] = useState<SlicerOwner[]>([])
   const [currencies, setCurrencies] = useState<string[]>([])
@@ -178,55 +180,66 @@ const Main = () => {
     }
   }, [loading, uploadStep, slicerId])
 
-  const { data: session } = useSession()
-
   return session ? (
     <>
-      <FormGithub session={session} />
-      <ConnectBlock>
-        <form
-          className="w-full mx-auto space-y-8 max-w-screen-xs"
-          onSubmit={submit}
-        >
-          <FormSafes
-            baseUrl={baseUrl}
-            safeAddress={safeAddress}
-            setSafeAddress={setSafeAddress}
-            message={message}
-          />
-
-          <div>
-            <ExpandItem
-              label="Slicer settings"
-              content={
-                <FormSlicer
-                  success={uploadStep == 4}
-                  slicerOwners={slicerOwners}
-                  setSlicerOwners={setSlicerOwners}
-                  currencies={currencies}
-                  setCurrencies={setCurrencies}
-                />
-              }
+      <FormGithub setRepo={setRepo} />
+      <form
+        className="w-full mx-auto space-y-8 max-w-screen-xs"
+        onSubmit={submit}
+      >
+        {repo && (
+          <ConnectBlock>
+            <FormSafes
+              baseUrl={baseUrl}
+              safeAddress={safeAddress}
+              setSafeAddress={setSafeAddress}
+              message={message}
             />
-          </div>
 
-          <div className="pt-6">
-            <p className="pb-6 text-sm text-gray-500">
-              Proceed to create a Slicer controlled by the chosen Gnosis Safe,
-              and delegate &quot;Merge to earn&quot; to create Safe proposals
-              when pull requests are merged.
-            </p>
-            <Button
-              type="submit"
-              label="Set up Slicer and Safe"
-              loading={isLoading || loading}
-            />
-          </div>
-        </form>
-      </ConnectBlock>
+            <div>
+              <ExpandItem
+                label="Slicer settings"
+                content={
+                  <FormSlicer
+                    success={uploadStep == 4}
+                    slicerOwners={slicerOwners}
+                    setSlicerOwners={setSlicerOwners}
+                    currencies={currencies}
+                    setCurrencies={setCurrencies}
+                  />
+                }
+              />
+            </div>
+
+            <div className="pt-6">
+              <p className="pb-6 text-sm text-gray-500">
+                Proceed to create a Slicer controlled by the chosen Gnosis Safe,
+                and delegate &quot;Merge to earn&quot; to create Safe proposals
+                when pull requests are merged.
+              </p>
+              <Button
+                type="submit"
+                label="Set up Slicer and Safe"
+                loading={isLoading || loading}
+              />
+            </div>
+          </ConnectBlock>
+        )}
+      </form>
     </>
   ) : (
-    <Button label="Sign in with Github" onClick={() => signIn("github")} />
+    <Button
+      label={
+        <span className="flex items-center gap-3">
+          <span className="h-5 text-white">
+            <GithubCircle />
+          </span>
+          <span>Sign in with Github</span>
+        </span>
+      }
+      onClick={() => signIn("github")}
+      color="text-white bg-black hover:bg-gray-700 focus:bg-gray-700 transition-colors duration-150"
+    />
   )
 }
 

@@ -27,9 +27,10 @@ import fetcher from "@utils/fetcher"
 import useSWR from "swr"
 
 const Main = () => {
+  const addRecentTransaction = useAddRecentTransaction()
   const { data: session } = useSession()
   const { account, setModalView } = useAppContext()
-  const addRecentTransaction = useAddRecentTransaction()
+
   const env = process.env.NEXT_PUBLIC_ENV
   const baseUrl =
     env == "mainnet"
@@ -46,6 +47,15 @@ const Main = () => {
   const [slicerOwners, setSlicerOwners] = useState<SlicerOwner[]>([])
   const [currencies, setCurrencies] = useState<string[]>([])
   const [slicerId, setSlicerId] = useState(0)
+
+  const { data: isUnsetRepo } = useSWR(
+    repoId ? `/api/connection/get?repoId=${repoId}` : null,
+    fetcher
+  )
+  const { data: repoList } = useSWR(
+    session?.accessToken ? `/api/getRepo?token=${session.accessToken}` : null,
+    fetcher
+  )
 
   const { data, isLoading, isSuccess, signMessageAsync } = useSignMessage({
     message: ethers.utils.arrayify(
@@ -155,6 +165,7 @@ const Main = () => {
             headers: { "Content-type": "application/json" },
             body: JSON.stringify({
               token: session.accessToken,
+              installationId: repoList.installationId,
               repoId,
               slicerId: Number(tokenId),
               safeAddress
@@ -197,21 +208,20 @@ const Main = () => {
     }
   }, [loading, uploadStep, slicerId])
 
-  const { data: isFreeRepo } = useSWR(
-    repoId ? `/api/connection/get?repoId=${repoId}` : null,
-    fetcher
-  )
-
   return session ? (
     <div className="w-full mx-auto space-y-8 max-w-screen-xs">
-      <FormGithub repoId={repoId} setRepoId={setRepoId} />
-      {isFreeRepo && (
+      <FormGithub
+        repoId={repoId}
+        setRepoId={setRepoId}
+        repoList={repoList?.data}
+      />
+      {isUnsetRepo && (
         <p className="font-medium text-yellow-600">
           This repo has already been set up
         </p>
       )}
       <form className="space-y-8" onSubmit={submit}>
-        {repoId && !isFreeRepo && (
+        {repoId && !isUnsetRepo && (
           <ConnectBlock>
             <FormSafes
               baseUrl={baseUrl}

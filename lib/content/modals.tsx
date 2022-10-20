@@ -69,8 +69,8 @@ export const SETUP = (params: any) => {
           nullCondition={uploadStep < 3}
           initCondition={uploadStep == 4}
           uploadState={uploadState}
-          waitingState="Finalization"
-          endState={uploadStep != 3 ? "Repo set up" : "Reverted"}
+          waitingState="Set up repo"
+          endState={uploadStep != 3 ? "Done" : "Reverted"}
         />
       </div>
       <div className="pt-8">

@@ -1,32 +1,22 @@
 import { Button, InputSelect } from "@components/ui"
-import fetcher from "@utils/fetcher"
-import { useSession } from "next-auth/react"
 import { Dispatch, SetStateAction } from "react"
-import useSWR from "swr"
 
 type Props = {
   repoId: string
   setRepoId: Dispatch<SetStateAction<string>>
+  repoList: any
 }
 
-const FormGithub = ({ repoId, setRepoId }: Props) => {
-  const { data: session } = useSession()
-  const { data: repoList } = useSWR(
-    session?.accessToken
-      ? `https://a12a-2-38-25-82.eu.ngrok.io//api/getRepo?token=${session.accessToken}`
-      : null,
-    fetcher
-  )
-
-  const availableRepos = repoList?.installations?.map((el: any) => ({
+const FormGithub = ({ repoId, setRepoId, repoList }: Props) => {
+  const availableRepos = repoList?.repositories.map((el: any) => ({
     value: el.id,
-    name: el.app_slug
+    name: el.name
   }))
 
   return repoList?.total_count == 0 ? (
     <div>
       <p className="pb-4 font-medium">
-        You still have to install Merge to earn on your repositories
+        You still have to install the app on your repositories
       </p>
       <Button
         type="button"

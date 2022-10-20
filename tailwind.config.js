@@ -35,7 +35,7 @@ module.exports = {
     },
     extend: {
       screens: {
-        xs: "570px"
+        xs: "575px"
       },
       colors: {
         gray: colors.gray,

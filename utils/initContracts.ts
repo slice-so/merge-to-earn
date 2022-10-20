@@ -8,7 +8,7 @@ export const slicerId = 4
 export const safeAddress = "0xA8a3763a206D99d3b8bEc94d336F43FdEC3fC6F8"
 export const sliceCoreAddress = process.env.NEXT_PUBLIC_SLICECORE
 const alchemyId = process.env.ALCHEMY_ID
-const provider = new ethers.providers.AlchemyProvider(
+export const provider = new ethers.providers.AlchemyProvider(
   process.env.NEXT_PUBLIC_ENV,
   alchemyId
 )

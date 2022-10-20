@@ -1,9 +1,11 @@
-import { WebhookEvent, IssueCommentEvent } from "@octokit/webhooks-types"
+import { IssueCommentEvent } from "@octokit/webhooks-types"
+import { controllerCheck } from "@utils/controllerCheck"
 import fetcher from "@utils/fetcher"
+import { onPrOpenedMessage, onSlicesRequestMessage } from "@utils/ghMessages"
 
 export default async function onComment(payload: IssueCommentEvent) {
   // TODO change slicer and safe
-  const slicerId = 1
+  const slicerId = "1"
   const safeAddress = "0xA8a3763a206D99d3b8bEc94d336F43FdEC3fC6F8"
 
   const text: string = payload.comment.body

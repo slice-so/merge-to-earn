@@ -1,6 +1,18 @@
 import formatNumber from "./formatNumber"
-import { sliceCore } from "./initContracts"
-import { resolveEns, isValidAddress } from "./resolveEns"
+import { provider, sliceCore } from "./initContracts"
+
+export const resolveEnsForBot = async (address: string) => {
+  const resolved =
+    address.substring(address.length - 4) == ".eth"
+      ? await provider.resolveName(address)
+      : address
+  console.log(resolved)
+  return resolved
+}
+
+export const isValidAddress = (address: string) => {
+  return address.match(/^0x[a-fA-F0-9]{40}$/) || address.match(/.eth$/)
+}
 
 export const baseReviewMessage =
   "Please review your request and submit it again."
@@ -47,7 +59,7 @@ export async function onSlicesRequestMessage(
     const [address, sliceAmount] = el.split(":")
     if (Number(sliceAmount)) {
       if (isValidAddress(address)) {
-        const resolved = await resolveEns(address)
+        const resolved = await resolveEnsForBot(address)
         if (resolved) {
           slicesToBeMinted += Number(sliceAmount)
           resolvedArray.push(

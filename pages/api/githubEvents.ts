@@ -1,6 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next"
 import { Webhooks } from "@octokit/webhooks"
-import { WebhookEvent } from "@octokit/webhooks-types"
 
 export default async function handler(
   req: NextApiRequest,

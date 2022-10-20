@@ -12,7 +12,7 @@
     "@headlessui/react": "^1.7.3",
     "@prisma/client": "^4.5.0",
     "@rainbow-me/rainbowkit": "^0.7.1",
-    "@types/node": "^18.8.5",
+    "@types/node": "^15.14.1",
     "@types/react": "^18.0.21",
     "canvas-confetti": "^1.5.1",
     "click-to-react-component": "^1.0.8",

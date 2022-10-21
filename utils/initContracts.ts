@@ -5,7 +5,7 @@ import { sliceCoreInterface } from "../abi/SliceCore"
 import { gnosisSafeInterface } from "../abi/GnosisSafe"
 
 // TODO remove slicerId and safe address
-export const slicerId = 1
+export const slicerId = 4
 export const safeAddress = "0xA8a3763a206D99d3b8bEc94d336F43FdEC3fC6F8"
 
 export const sliceCoreAddress = process.env.NEXT_PUBLIC_SLICECORE

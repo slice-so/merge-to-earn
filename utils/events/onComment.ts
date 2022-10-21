@@ -7,7 +7,7 @@ import { createComment, editComment } from "@utils/ghHandler"
 export default async function onComment(payload: IssueCommentEvent) {
   console.log("on comment ---------")
   // TODO change slicer and safe
-  const slicerId = "1"
+  const slicerId = "4"
   const safeAddress = "0xA8a3763a206D99d3b8bEc94d336F43FdEC3fC6F8"
 
   const text: string = payload.comment.body
@@ -52,7 +52,8 @@ export default async function onComment(payload: IssueCommentEvent) {
             payload.installation.id
           )
         } else {
-          // await controllerCheck(slicerId, safeAddress)
+          // check if safeAddress is the slicer controller
+          await controllerCheck(slicerId, safeAddress)
           createComment(
             payload.repository.owner.login,
             payload.repository.name,

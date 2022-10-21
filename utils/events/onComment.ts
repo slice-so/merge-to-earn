@@ -3,12 +3,12 @@ import { controllerCheck } from "@utils/controllerCheck"
 import fetcher from "@utils/fetcher"
 import { onPrOpenedMessage, onSlicesRequestMessage } from "@utils/ghMessages"
 import { createComment, editComment } from "@utils/ghHandler"
+import getConnection from "@utils/getConnection"
+import { Connection } from "@prisma/client"
 
 export default async function onComment(payload: IssueCommentEvent) {
-  console.log("on comment ---------")
-  // TODO change slicer and safe
-  const slicerId = "4"
-  const safeAddress = "0xA8a3763a206D99d3b8bEc94d336F43FdEC3fC6F8"
+  const connection: Connection = await getConnection(payload.repository.id)
+  const { slicerId, safeAddress } = connection
 
   const text: string = payload.comment.body
   const requiredText = "### Slice distribution request"
@@ -34,7 +34,6 @@ export default async function onComment(payload: IssueCommentEvent) {
         splitText
       )
       botMessage = m
-      // TODO: Add type checks on addresses and sliceAmounts
       // Edit first bot comment
       if (success) {
         const newFirstMessage =

@@ -45,7 +45,7 @@ export function onPrOpenedMessage(
 
 // TODO fix params type
 export async function onSlicesRequestMessage(
-  slicerId: string,
+  slicerId: string | number,
   splitText: any
 ): Promise<[string, boolean, number]> {
   let slicesToBeMinted = 0

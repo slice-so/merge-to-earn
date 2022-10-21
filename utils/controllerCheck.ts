@@ -1,7 +1,7 @@
 import { sliceCore } from "./initContracts"
 
 export const controllerCheck = async (
-  slicerId: string,
+  slicerId: string | number,
   safeAddress: string
 ) => {
   if ((await sliceCore.controller(slicerId)) == safeAddress) {

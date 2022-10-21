@@ -7,12 +7,12 @@ export default NextAuth({
   secret: process.env.NEXTAUTH_SECRET,
   providers: [
     GithubProvider({
-      clientId: process.env.GITHUB_APP_ID,
-      clientSecret: process.env.GITHUB_APP_SECRET,
+      clientId: process.env.GH_APP_CLIENT_ID,
+      clientSecret: process.env.GH_APP_CLIENT_SECRET,
       authorization: {
         params: {
           redirect_uri: `${baseUrl}/api/auth/callback/github`,
-          state: process.env.GITHUB_STATE_SECRET,
+          state: process.env.GH_STATE_SECRET,
           login: "",
           allow_signup: "true",
           scope: ""

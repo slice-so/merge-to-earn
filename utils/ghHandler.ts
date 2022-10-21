@@ -2,7 +2,7 @@ import { Octokit } from "@octokit/core"
 import { restEndpointMethods } from "@octokit/plugin-rest-endpoint-methods"
 import { createAppAuth } from "@octokit/auth-app"
 
-export function getOctokit(installationId: number | null = null) {
+export function getOctokit(installationId?: number) {
   const privateKey = Buffer.from(
     process.env.GH_APP_PRIVATE_KEY,
     "base64"
@@ -25,15 +25,15 @@ export function getOctokit(installationId: number | null = null) {
 export async function createComment(
   owner: string,
   repo: string,
-  issueNumber: number,
+  issue_number: number,
   message: string,
   installationId: number
 ) {
   const octokit = getOctokit(installationId)
   const { data } = await octokit.rest.issues.createComment({
-    owner: owner,
-    repo: repo,
-    issue_number: issueNumber,
+    owner,
+    repo,
+    issue_number,
     body: message
   })
   return data
@@ -48,10 +48,25 @@ export async function editComment(
 ) {
   const octokit = getOctokit(installationId)
   const { data } = await octokit.rest.issues.updateComment({
-    owner: owner,
-    repo: repo,
-    comment_id: comment_id,
+    owner,
+    repo,
+    comment_id,
     body: message
+  })
+  return data
+}
+
+export async function getComments(
+  owner: string,
+  repo: string,
+  issue_number: number,
+  installationId: number
+) {
+  const octokit = getOctokit(installationId)
+  const { data } = await octokit.rest.issues.listComments({
+    owner,
+    repo,
+    issue_number
   })
   return data
 }

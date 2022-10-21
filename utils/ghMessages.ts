@@ -11,7 +11,7 @@ export const resolveEnsForBot = async (address: string) => {
 }
 
 export const isValidAddress = (address: string) => {
-  return address.match(/^0x[a-fA-F0-9]{40}$/) || address.match(/.eth$/)
+  return address.match(/^(0x[a-fA-F0-9]{40})$|\.eth$/)
 }
 
 export const baseReviewMessage =

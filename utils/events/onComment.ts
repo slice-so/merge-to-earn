@@ -1,10 +1,15 @@
-import { IssueCommentEvent } from "@octokit/webhooks-types"
+import {
+  IssueCommentEvent,
+  PullRequest,
+  PullRequestEvent
+} from "@octokit/webhooks-types"
 import { controllerCheck } from "@utils/controllerCheck"
 import fetcher from "@utils/fetcher"
 import { onPrOpenedMessage, onSlicesRequestMessage } from "@utils/ghMessages"
 import { createComment, editComment } from "@utils/ghHandler"
 import getConnection from "@utils/getConnection"
 import { Connection } from "@prisma/client"
+import { getPinnedComment } from "@utils/getPinnedComment"
 
 export default async function onComment(payload: IssueCommentEvent) {
   const connection: Connection = await getConnection(payload.repository.id)
@@ -17,14 +22,10 @@ export default async function onComment(payload: IssueCommentEvent) {
 
   if (splitText[0].trim() === requiredText) {
     const author = payload.issue.user.login
-    // TODO use octokit request for private repos
-    const comments = await fetcher(payload.issue.comments_url)
-    const pinnedBotComment = comments.find(
-      (el: any) =>
-        el.user.login === "merge-to-earn[bot]" &&
-        el.body.includes(`### 👋 Gm @${author}`)
-    )
 
+    const pinnedBotComment = await getPinnedComment(
+      <PullRequestEvent & IssueCommentEvent>payload
+    )
     // Check if comment's user is the PR owner
     if (payload.comment.user.id === payload.issue.user.id) {
       // Set bot message to fire in create comment

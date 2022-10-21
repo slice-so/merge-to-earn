@@ -32,7 +32,7 @@ const Head: FC = () => {
       />
       <NextHead>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="twitter:image" content={`${domain}/twitter_card.png`} />
+        <meta name="twitter:image" content={`${domain}/twitter_card.jpg`} />
         <link
           rel="apple-touch-icon"
           sizes="180x180"

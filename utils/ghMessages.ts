@@ -19,7 +19,7 @@ export const baseReviewMessage =
 
 export function onPrOpenedMessage(
   author: string,
-  slicerId: string,
+  slicerId: string | number,
   totalSlices: number
 ) {
   const today = new Date()

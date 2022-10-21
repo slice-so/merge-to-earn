@@ -53,13 +53,12 @@ export default function Home() {
               >
                 Merge to earn
               </a>{" "}
-              is a Github action to automate rewarding contributors with a slice
-              of ownership over a project and its earnings, when pull requests
-              are merged.
+              is a Github app to automate rewarding contributors with a slice of
+              ownership over a project and its earnings, when pull requests are
+              merged.
             </p>
             <p>
-              Use this app to set up a Slicer and Gnosis Safe for your
-              repository.
+              Here you can set up a Slicer and Gnosis Safe for your repository.
             </p>
           </div>
           <Main />

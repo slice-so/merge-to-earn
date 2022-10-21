@@ -20,7 +20,7 @@ const FormSafes = ({
 }: Props) => {
   const { account } = useAppContext()
   const { data: ownedSafes } = useSWR(
-    account ? `${baseUrl}/api/v1/owners/${account}/safes` : null,
+    account ? `${baseUrl}api/v1/owners/${account}/safes` : null,
     fetcher
   )
   const formattedOwnedSafes = ownedSafes?.safes.map((el: string) => ({
@@ -41,7 +41,7 @@ const FormSafes = ({
                 href="https://gnosis-safe.io/app"
                 target="_blank"
                 rel="noreferrer"
-                className="text-gray-500 highlight"
+                className="text-blue-600 hover:underline"
               >
                 Gnosis Safe app
               </a>

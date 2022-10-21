@@ -1,4 +1,5 @@
 import { Button, DoubleText, LoadingStep } from "@components/ui"
+import { accounts } from "@components/ui/Social/Social"
 
 export type View = {
   name: ViewNames
@@ -19,9 +20,12 @@ export const SETUP = (params: any) => {
       uploadState = "Creating Slicer ..."
       break
     case 3:
-      uploadState = "Something went wrong"
+      uploadState = "Setting up repo ..."
       break
     case 4:
+      uploadState = "Something went wrong"
+      break
+    case 5:
       uploadState = "Success"
       break
   }
@@ -35,7 +39,7 @@ export const SETUP = (params: any) => {
         <LoadingStep
           initCondition={uploadStep < 2}
           uploadState={uploadState}
-          endState={uploadStep != 3 ? "Safe delegated" : "Reverted"}
+          endState={uploadStep != 4 ? "Safe delegated" : "Reverted"}
         />
         <LoadingStep
           nullCondition={uploadStep < 2}
@@ -43,7 +47,7 @@ export const SETUP = (params: any) => {
           uploadState={uploadState}
           waitingState="Slicer creation"
           endState={
-            uploadStep != 3 ? (
+            uploadStep != 4 ? (
               <>
                 Created{" "}
                 <a
@@ -62,26 +66,33 @@ export const SETUP = (params: any) => {
             )
           }
         />
+        <LoadingStep
+          nullCondition={uploadStep < 3}
+          initCondition={uploadStep < 4}
+          uploadState={uploadState}
+          waitingState="Set up repo"
+          endState={uploadStep != 4 ? "Your repo is set! 🎉" : "Reverted"}
+        />
       </div>
       <div className="pt-8">
-        {uploadStep > 2 ? (
+        {uploadStep > 3 ? (
           <>
-            {uploadStep == 4 && (
+            {uploadStep != 4 && (
               <p className="pb-6 text-sm xs:px-10">
-                Finish setting up the workflow for your repository on{" "}
+                Check out the{" "}
                 <a
-                  href="https://github.com"
+                  href={accounts.github + "#merge-to-earn-app"}
                   target="_blank"
                   rel="noreferrer"
                   className="highlight"
                 >
-                  Github
-                </a>
-                .
+                  Merge to earn readme
+                </a>{" "}
+                on how to use the app
               </p>
             )}
             <Button
-              label="Go back"
+              label={uploadStep != 4 ? "Set another repo" : "Go back"}
               onClick={() => setModalView({ name: "" })}
             />
           </>

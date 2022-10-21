@@ -1,16 +1,21 @@
 import Link from "next/link"
-import { useRouter } from "next/router"
-// import { signIn, useSession } from "next-auth/client"
 import Logo from "@components/icons/Logo"
 import Nightwind from "@components/icons/Nightwind"
 import { Container } from "@components/ui"
 import { ConnectButton } from "@rainbow-me/rainbowkit"
-import { Github } from "@components/icons/Social"
-import { accounts } from "../Social/Social"
+import { useSession } from "next-auth/react"
+import Image from "next/future/image"
+import Chevron from "@components/icons/Chevron"
+import dynamic from "next/dynamic"
+import { useState } from "react"
+
+const DropdownMenu = dynamic(() => import("@components/ui/DropdownMenu"), {
+  ssr: false
+})
 
 const Navbar = () => {
-  // const [session, loading] = useSession()
-  // const router = useRouter()
+  const { data: session } = useSession()
+  const [showDropdown, setShowDropdown] = useState(false)
 
   return (
     <header className="shadow-sm">
@@ -23,20 +28,31 @@ const Navbar = () => {
               </a>
             </Link>
           </div>
-          <div className="relative z-10 flex items-center space-x-6 sm:space-x-8">
-            <a
-              className="w-6 hover:text-purple-500"
-              href={accounts["github"]}
-              target="_blank"
-              rel="noreferrer"
-              aria-label="Github logo"
-            >
-              <Github />
-            </a>
+          <div className="relative z-10 flex items-center space-x-4 sm:space-x-6">
             <div>
               <Nightwind size="h-[24px]" />
             </div>
             <ConnectButton showBalance={false} />
+            {session && (
+              <div
+                className="flex items-center h-10 gap-1 px-3 transition-transform duration-150 bg-white border border-white shadow-md cursor-pointer nightwind-prevent rounded-xl border-opacity-80 hover:scale-105"
+                onClick={() => setShowDropdown(!showDropdown)}
+              >
+                <Image
+                  src={session.user.image}
+                  width={28}
+                  height={28}
+                  alt="Github avatar"
+                  className="rounded-full"
+                />
+                <Chevron className="w-4 text-black -rotate-90 nightwind-prevent" />
+              </div>
+            )}
+            {showDropdown && (
+              <div className="absolute bottom-0 right-0 group-hover:block">
+                <DropdownMenu />
+              </div>
+            )}
           </div>
         </nav>
       </Container>

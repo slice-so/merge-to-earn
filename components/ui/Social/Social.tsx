@@ -24,7 +24,7 @@ export const accounts = {
   slice: "https://slice.so",
   twitter: "https://twitter.com/slice__so",
   discord: "https://discord.gg/CdyHUzdZks",
-  github: "https://github.com/slice-so"
+  github: "https://github.com/slice-so/merge-to-earn-app"
   // notion: "https://slicedao.notion.site",
   // blog: "/blog",
   // juicebox: "https://juicebox.money/#/p/slice"

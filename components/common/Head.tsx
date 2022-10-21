@@ -8,7 +8,7 @@ export const defaultTitle = "Merge to earn"
 export const longTitle =
   "Merge to earn – The best reward system for open source development"
 export const defaultDescription =
-  "Merge to earn is a Github action to automate rewarding contributors with a slice of ownership over a project and its earnings, when pull requests are merged."
+  "Automate rewarding contributors with a slice of ownership over a project and its earnings, when pull requests are merged."
 export const domain = process.env.NEXT_PUBLIC_APP_URL
 const twitterAccount = accounts.twitter.split("twitter.com/").pop()
 
@@ -32,7 +32,7 @@ const Head: FC = () => {
       />
       <NextHead>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="twitter:image" content={`${domain}/twitter_card.png`} />
+        <meta name="twitter:image" content={`${domain}/twitter_card.jpg`} />
         <link
           rel="apple-touch-icon"
           sizes="180x180"

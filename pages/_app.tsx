@@ -5,6 +5,7 @@ import { Background, Layout } from "@components/ui"
 import "../styles/global/styles.scss"
 import { AppWrapper } from "@components/ui/context"
 import { AppProps } from "next/dist/shared/lib/router/router"
+import { SessionProvider } from "next-auth/react"
 
 import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit"
 import { alchemyProvider } from "wagmi/providers/alchemy"
@@ -30,7 +31,7 @@ const wagmiClient = createClient({
   provider
 })
 
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return (
     <>
       <ClickToComponent />
@@ -46,12 +47,14 @@ function MyApp({ Component, pageProps }: AppProps) {
             coolMode
             showRecentTransactions={true}
           >
-            <AppWrapper>
-              <Layout>
-                <Background />
-                <Component {...pageProps} />
-              </Layout>
-            </AppWrapper>
+            <SessionProvider session={session}>
+              <AppWrapper>
+                <Layout>
+                  <Background />
+                  <Component {...pageProps} />
+                </Layout>
+              </AppWrapper>
+            </SessionProvider>
           </RainbowKitProvider>
         </WagmiConfig>
       </ThemeProvider>

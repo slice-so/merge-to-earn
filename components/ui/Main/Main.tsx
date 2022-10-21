@@ -2,6 +2,7 @@ import {
   Button,
   ConnectBlock,
   ExpandItem,
+  FormGithub,
   FormSafes,
   FormSlicer
 } from "@components/ui"
@@ -20,21 +21,41 @@ import launchConfetti from "@utils/launchConfetti"
 import executeTransaction from "@utils/executeTransaction"
 import { useAddRecentTransaction } from "@rainbow-me/rainbowkit"
 import { LogDescription } from "ethers/lib/utils"
+import { GithubCircle } from "@components/icons/Social"
+import { signIn, useSession } from "next-auth/react"
+import fetcher from "@utils/fetcher"
+import useSWR from "swr"
 
 const Main = () => {
-  const { account, setModalView } = useAppContext()
   const addRecentTransaction = useAddRecentTransaction()
-  const baseUrl = `https://safe-transaction.${process.env.NEXT_PUBLIC_ENV}.gnosis.io`
+  const { data: session } = useSession()
+  const { account, setModalView } = useAppContext()
+
+  const env = process.env.NEXT_PUBLIC_ENV
+  const baseUrl =
+    env == "mainnet"
+      ? `https://safe-transaction.${env}.gnosis.io/`
+      : `https://safe-transaction-${env}.safe.global/`
   const delegateAddress = process.env.NEXT_PUBLIC_DELEGATE
 
   const [loading, setLoading] = useState(false)
   const [uploadStep, setUploadStep] = useState(0)
   const [message, setMessage] = useState<Message>()
 
+  const [repoId, setRepoId] = useState("")
   const [safeAddress, setSafeAddress] = useState("")
   const [slicerOwners, setSlicerOwners] = useState<SlicerOwner[]>([])
   const [currencies, setCurrencies] = useState<string[]>([])
   const [slicerId, setSlicerId] = useState(0)
+
+  const { data: isUnsetRepo } = useSWR(
+    repoId ? `/api/connection/get?repoId=${repoId}` : null,
+    fetcher
+  )
+  const { data: repoList } = useSWR(
+    session?.accessToken ? `/api/getRepo?token=${session.accessToken}` : null,
+    fetcher
+  )
 
   const { data, isLoading, isSuccess, signMessageAsync } = useSignMessage({
     message: ethers.utils.arrayify(
@@ -88,11 +109,10 @@ const Main = () => {
         method: "POST"
       }
 
-      const res = await fetch(`${baseUrl}/api/v1/delegates/`, body)
+      const res = await fetch(`${baseUrl}api/v1/delegates/`, body)
 
       if (res.status != 201) {
         const errorMessage = Object.values(await res.json())[0][0]
-        console.log(await res.json())
 
         handleMessage(
           { message: errorMessage, messageStatus: "error" },
@@ -112,7 +132,7 @@ const Main = () => {
     try {
       const res = await signMessageAsync()
       if (!res) {
-        setUploadStep(3) // fail
+        setUploadStep(4) // fail
       } else {
         setUploadStep(2)
 
@@ -139,14 +159,31 @@ const Main = () => {
 
           launchConfetti()
 
-          setUploadStep(4)
+          setUploadStep(3)
+
+          const body = {
+            headers: { "Content-type": "application/json" },
+            body: JSON.stringify({
+              token: session.accessToken,
+              installationId: repoList.installationId,
+              repoId,
+              slicerId: Number(tokenId),
+              safeAddress
+            }),
+            method: "POST"
+          }
+          const res = await fetch("/api/connection/create", body)
+          if (res.status == 200) {
+            setUploadStep(5)
+          } else {
+            setUploadStep(4) // fail
+          }
         } else {
-          setUploadStep(3) // fail
+          setUploadStep(4) // fail
         }
       }
     } catch (err) {
-      setUploadStep(3)
-      console.log(err.message)
+      setUploadStep(4)
     }
 
     setLoading(false)
@@ -171,48 +208,72 @@ const Main = () => {
     }
   }, [loading, uploadStep, slicerId])
 
-  return (
-    <ConnectBlock>
-      <form
-        className="w-full mx-auto space-y-8 max-w-screen-xs"
-        onSubmit={submit}
-      >
-        <FormSafes
-          baseUrl={baseUrl}
-          safeAddress={safeAddress}
-          setSafeAddress={setSafeAddress}
-          message={message}
-        />
+  return session ? (
+    <div className="w-full mx-auto space-y-8 max-w-screen-xs">
+      <FormGithub
+        repoId={repoId}
+        setRepoId={setRepoId}
+        repoList={repoList?.data}
+      />
+      {isUnsetRepo && (
+        <p className="font-medium text-yellow-600">
+          This repo has already been set up
+        </p>
+      )}
+      <form className="space-y-8" onSubmit={submit}>
+        {repoId && !isUnsetRepo && (
+          <ConnectBlock>
+            <FormSafes
+              baseUrl={baseUrl}
+              safeAddress={safeAddress}
+              setSafeAddress={setSafeAddress}
+              message={message}
+            />
 
-        <div>
-          <ExpandItem
-            label="Slicer settings"
-            content={
-              <FormSlicer
-                success={uploadStep == 4}
-                slicerOwners={slicerOwners}
-                setSlicerOwners={setSlicerOwners}
-                currencies={currencies}
-                setCurrencies={setCurrencies}
+            <div>
+              <ExpandItem
+                label="Slicer settings"
+                content={
+                  <FormSlicer
+                    success={uploadStep == 4}
+                    slicerOwners={slicerOwners}
+                    setSlicerOwners={setSlicerOwners}
+                    currencies={currencies}
+                    setCurrencies={setCurrencies}
+                  />
+                }
               />
-            }
-          />
-        </div>
+            </div>
 
-        <div className="pt-6">
-          <p className="pb-6 text-sm text-gray-500">
-            Proceed to create a Slicer controlled by the chosen Gnosis Safe, and
-            delegate &quot;Merge to earn&quot; to create Safe proposals when
-            pull requests are merged.
-          </p>
-          <Button
-            type="submit"
-            label="Set up Slicer and Safe"
-            loading={isLoading || loading}
-          />
-        </div>
+            <div className="pt-6">
+              <p className="pb-6 text-sm text-gray-500">
+                Proceed to create a Slicer controlled by the Gnosis Safe, and
+                delegate &quot;Merge to earn&quot; to create Safe proposals when
+                pull requests are merged.
+              </p>
+              <Button
+                type="submit"
+                label="Set up Slicer and Safe"
+                loading={isLoading || loading}
+              />
+            </div>
+          </ConnectBlock>
+        )}
       </form>
-    </ConnectBlock>
+    </div>
+  ) : (
+    <Button
+      label={
+        <span className="flex items-center gap-3">
+          <span className="h-5 text-white">
+            <GithubCircle />
+          </span>
+          <span>Sign in with Github</span>
+        </span>
+      }
+      onClick={() => signIn("github")}
+      color="text-white bg-black hover:bg-gray-700 focus:bg-gray-700 transition-colors duration-150"
+    />
   )
 }
 

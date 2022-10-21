@@ -11,6 +11,7 @@ type Props = {
   setValue: Dispatch<SetStateAction<string>>
   options?: SelectValue[]
   label?: string
+  labelAction?: JSX.Element
   question?: JSX.Element | string
   questionPosition?: string
   helpText?: JSX.Element | string
@@ -25,6 +26,7 @@ const InputSelect = ({
   setValue,
   options,
   label,
+  labelAction,
   question,
   questionPosition,
   helpText,
@@ -39,6 +41,7 @@ const InputSelect = ({
         <div className="relative flex items-center">
           <p className="pr-1 text-sm font-semibold text-gray-700">{label}</p>
           {question && <Question position={questionPosition} text={question} />}
+          {labelAction && labelAction}
         </div>
         {helpText && <p className="text-sm text-gray-500">{helpText}</p>}
       </div>

@@ -24,4 +24,4 @@ export const safe = (safeAddress: string) =>
     provider
   ) as GnosisSafe
 
-// export const mteWallet = new ethers.Wallet(String(process.env.PK))
+export const mteWallet = new ethers.Wallet(String(process.env.PK))

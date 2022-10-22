@@ -5,7 +5,7 @@ import { sliceCoreInterface } from "../abi/SliceCore"
 import { gnosisSafeInterface } from "../abi/GnosisSafe"
 
 export const sliceCoreAddress = process.env.NEXT_PUBLIC_SLICECORE
-const alchemyId = process.env.ALCHEMY_ID
+const alchemyId = process.env.NEXT_PUBLIC_ALCHEMY_ID
 export const provider = new ethers.providers.AlchemyProvider(
   process.env.NEXT_PUBLIC_ENV,
   alchemyId

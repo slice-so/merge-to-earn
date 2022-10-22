@@ -14,7 +14,7 @@ export const SETUP = (params: any) => {
   let uploadState: string
   switch (uploadStep) {
     case 1:
-      uploadState = "Delegating Safe ..."
+      uploadState = "Sign message on your wallet to delegate Gnosis Safe ..."
       break
     case 2:
       uploadState = "Creating Slicer ..."

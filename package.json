@@ -15,7 +15,7 @@
     "@octokit/plugin-rest-endpoint-methods": "^6.7.0",
     "@octokit/webhooks": "^10.3.0",
     "@prisma/client": "^4.5.0",
-    "@rainbow-me/rainbowkit": "^0.7.1",
+    "@rainbow-me/rainbowkit": "^0.7.3",
     "@types/node": "^15.14.1",
     "@types/react": "^18.0.21",
     "canvas-confetti": "^1.5.1",

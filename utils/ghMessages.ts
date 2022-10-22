@@ -2,10 +2,18 @@ import formatNumber from "./formatNumber"
 import { provider, sliceCore } from "./initContracts"
 
 export const resolveEnsForBot = async (address: string) => {
-  const resolved =
-    address.substring(address.length - 4) == ".eth"
-      ? await provider.resolveName(address)
-      : address
+  let resolved: string
+  if (address.substring(address.length - 4) == ".eth") {
+    const resolvedAddress = await provider.resolveName(address)
+    if (resolvedAddress) {
+      resolved = `${address} (${resolvedAddress.replace(
+        resolvedAddress.substring(5, resolvedAddress.length - 3),
+        `___`
+      )})`
+    }
+  } else {
+    resolved = address
+  }
   return resolved
 }
 
@@ -26,11 +34,13 @@ export function onPrOpenedMessage(
 
   This repository uses [Merge to earn](https://github.com/slice-so/merge-to-earn) to reward contributors with a piece of [Slicer #${slicerId}](slice.so/slicer/${slicerId}).
   
-  When merging a pull request, contributors can **receive an agreed number of slices 🍰 (ERC1155 tokens) representing ownership over the project and its earnings**. Funds earned can be claimed anytime on [slice.so](slice.so) while slices can be transferred and managed from either the Slice website or directly from your ETH wallet.
+  When merging a pull request, contributors can **receive an agreed number of slices 🍰 (ERC1155 tokens) representing ownership over the project and its earnings**. 
+  
+  Funds earned can be claimed anytime on [slice.so](slice.so) while slices can be transferred and managed from either the Slice website or directly from your ETH wallet.
 
   ---
   
-  To request slices, comment with this template by specifying the **Ethereum addresses** of the contributors involved and the **desired amount of slices** for each.
+  Request slices by commenting with this template by specifying the **Ethereum addresses** of the contributors involved and the **desired amount of slices** for each.
   
   \`\`\`
   ### Slice distribution request
@@ -40,7 +50,7 @@ export function onPrOpenedMessage(
   - reviewer.eth : 50
   \`\`\`
   
-  > Total slices (${today.toDateString()}): ${formatNumber(totalSlices)}
+  > Current total slices (${today.toDateString()}): ${formatNumber(totalSlices)}
   `
 }
 

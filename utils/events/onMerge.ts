@@ -14,7 +14,9 @@ export default async function onMerge(payload: PullRequestEvent) {
   )
 
   if (pinnedBotComment) {
-    const accountsToReslice = formatAccountsToReslice(pinnedBotComment.body)
+    const accountsToReslice = await formatAccountsToReslice(
+      pinnedBotComment.body
+    )
 
     if (accountsToReslice.length) {
       const status = await proposeTransaction(

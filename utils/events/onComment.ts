@@ -1,10 +1,5 @@
-import {
-  IssueCommentEvent,
-  PullRequest,
-  PullRequestEvent
-} from "@octokit/webhooks-types"
+import { IssueCommentEvent, PullRequestEvent } from "@octokit/webhooks-types"
 import { controllerCheck } from "@utils/controllerCheck"
-import fetcher from "@utils/fetcher"
 import { onPrOpenedMessage, onSlicesRequestMessage } from "@utils/ghMessages"
 import { createComment, editComment } from "@utils/ghHandler"
 import getConnection from "@utils/getConnection"
@@ -13,6 +8,7 @@ import { getPinnedComment } from "@utils/getPinnedComment"
 
 export default async function onComment(payload: IssueCommentEvent) {
   const connection: Connection = await getConnection(payload.repository.id)
+
   const { slicerId, safeAddress } = connection
 
   const text: string = payload.comment.body
@@ -35,6 +31,7 @@ export default async function onComment(payload: IssueCommentEvent) {
         splitText
       )
       botMessage = m
+
       // Edit first bot comment
       if (success) {
         const newFirstMessage =
@@ -44,7 +41,7 @@ export default async function onComment(payload: IssueCommentEvent) {
 
         // If there is a pinned comment
         if (pinnedBotComment) {
-          editComment(
+          await editComment(
             payload.repository.owner.login,
             payload.repository.name,
             pinnedBotComment.id,
@@ -54,7 +51,7 @@ export default async function onComment(payload: IssueCommentEvent) {
         } else {
           // check if safeAddress is the slicer controller
           await controllerCheck(slicerId, safeAddress)
-          createComment(
+          await createComment(
             payload.repository.owner.login,
             payload.repository.name,
             payload.issue.number,
@@ -69,9 +66,9 @@ export default async function onComment(payload: IssueCommentEvent) {
     }
     if (
       pinnedBotComment ||
-      !botMessage.includes("### Upcoming slice distribution:")
+      !botMessage.includes("### Upcoming slice distribution")
     ) {
-      createComment(
+      await createComment(
         payload.repository.owner.login,
         payload.repository.name,
         payload.issue.number,

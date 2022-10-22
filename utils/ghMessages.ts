@@ -40,7 +40,7 @@ export function onPrOpenedMessage(
 
   ---
   
-  Request slices by commenting with this template by specifying the **Ethereum addresses** of the contributors involved and the **desired amount of slices** for each.
+  To request slices, comment using this template by specifying the **Ethereum addresses** of the contributors involved and the **desired amount of slices** for each.
   
   \`\`\`
   ### Slice distribution request

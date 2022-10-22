@@ -9,6 +9,7 @@ import { proposeTransaction } from "@utils/proposeSafeTransaction"
 export default async function onMerge(payload: PullRequestEvent) {
   const connection: Connection = await getConnection(payload.repository.id)
   const { slicerId, safeAddress } = connection
+
   const pinnedBotComment = await getPinnedComment(
     <PullRequestEvent & IssueCommentEvent>payload
   )
@@ -27,8 +28,8 @@ export default async function onMerge(payload: PullRequestEvent) {
 
       const message =
         status == 201
-          ? "Transaction has been proposed successfully on the gnosis safe 🎉"
-          : "There was an error and the transaction has not been proposed on the Gnosis Safe. Please contact the project's maintainers."
+          ? "Successfully proposed transaction on the Gnosis Safe 🎉"
+          : "Due to an unexpected issue the transaction has not been proposed on the Gnosis Safe. Please contact the project's maintainers."
 
       await createComment(
         payload.repository.owner.login,

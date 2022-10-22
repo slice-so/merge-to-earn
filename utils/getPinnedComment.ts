@@ -4,16 +4,18 @@ import { getComments } from "./ghHandler"
 export const getPinnedComment = async (
   payload: PullRequestEvent & IssueCommentEvent
 ) => {
+  const { number, user } = payload.issue || payload.pull_request
+
   const comments = await getComments(
     payload.repository.owner.login,
     payload.repository.name,
-    payload.issue.number || payload.pull_request.number,
+    number,
     payload.installation.id
   )
   const pinnedBotComment = comments.find(
     (el: any) =>
       el.user.login === "merge-to-earn[bot]" &&
-      el.body.includes(`### 👋 Gm @${payload.issue.user.login}`)
+      el.body.includes(`### 👋 Gm @${user.login}`)
   )
   return pinnedBotComment
 }

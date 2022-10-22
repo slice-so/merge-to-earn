@@ -25,6 +25,8 @@ import { GithubCircle } from "@components/icons/Social"
 import { signIn, useSession } from "next-auth/react"
 import fetcher from "@utils/fetcher"
 import useSWR from "swr"
+import { Repo, RepoResponse } from "../FormGithub/FormGithub"
+import { Repository } from "@octokit/webhooks-types"
 
 const Main = () => {
   const addRecentTransaction = useAddRecentTransaction()
@@ -42,17 +44,21 @@ const Main = () => {
   const [uploadStep, setUploadStep] = useState(0)
   const [message, setMessage] = useState<Message>()
 
-  const [repoId, setRepoId] = useState("")
+  const [repo, setRepo] = useState<Repo>()
   const [safeAddress, setSafeAddress] = useState("")
   const [slicerOwners, setSlicerOwners] = useState<SlicerOwner[]>([])
   const [currencies, setCurrencies] = useState<string[]>([])
   const [slicerId, setSlicerId] = useState(0)
 
   const { data: isUnsetRepo } = useSWR(
-    repoId ? `/api/connection/get?repoId=${repoId}` : null,
+    repo ? `/api/connection/get?repoId=${repo.repoId}` : null,
     fetcher
   )
-  const { data: repoList } = useSWR(
+  const {
+    data: repoList
+  }: {
+    data?: RepoResponse[]
+  } = useSWR(
     session?.accessToken ? `/api/getRepo?token=${session.accessToken}` : null,
     fetcher
   )
@@ -165,8 +171,8 @@ const Main = () => {
             headers: { "Content-type": "application/json" },
             body: JSON.stringify({
               token: session.accessToken,
-              installationId: repoList.installationId,
-              repoId,
+              installationId: repo.installationId,
+              repoId: repo.repoId,
               slicerId: Number(tokenId),
               safeAddress
             }),
@@ -210,18 +216,14 @@ const Main = () => {
 
   return session ? (
     <div className="w-full mx-auto space-y-8 max-w-screen-xs">
-      <FormGithub
-        repoId={repoId}
-        setRepoId={setRepoId}
-        repoList={repoList?.data}
-      />
+      <FormGithub repo={repo} setRepo={setRepo} repoList={repoList} />
       {isUnsetRepo && (
         <p className="font-medium text-yellow-600">
           This repo has already been set up
         </p>
       )}
       <form className="space-y-8" onSubmit={submit}>
-        {repoId && !isUnsetRepo && (
+        {repo && !isUnsetRepo && (
           <ConnectBlock>
             <FormSafes
               baseUrl={baseUrl}

@@ -36,6 +36,7 @@ export async function createComment(
     issue_number,
     body: message
   })
+
   return data
 }
 

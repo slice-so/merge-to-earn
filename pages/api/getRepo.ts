@@ -1,3 +1,4 @@
+import { Installation } from "@octokit/webhooks-types"
 import fetcher from "@utils/fetcher"
 import type { NextApiRequest, NextApiResponse } from "next"
 
@@ -18,16 +19,27 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     "https://api.github.com/user/installations",
     body
   )
-  const installationId = installationList.installations.find(
-    (installation) => Number(installation.app_id) == 247870
-  ).id
 
-  const data = await fetcher(
-    `https://api.github.com/user/installations/${installationId}/repositories`,
-    body
+  const appInstallations: Installation[] =
+    installationList.installations.filter(
+      (installation: Installation) => Number(installation.app_id) == 247870
+    )
+
+  const data = await Promise.all(
+    appInstallations.map((installation) =>
+      fetcher(
+        `https://api.github.com/user/installations/${installation.id}/repositories`,
+        body
+      )
+    )
   )
 
-  res.status(200).json({ installationId, data })
+  res.status(200).json(
+    data.map((repo, i) => {
+      repo["installation_id"] = appInstallations[i].id
+      return repo
+    })
+  )
 }
 
 export default handler

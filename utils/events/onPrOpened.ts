@@ -10,7 +10,7 @@ export default async function onPrOpened(payload: PullRequestEvent) {
   const { slicerId } = connection
   const totalSlices = Number(await sliceCore.totalSupply(slicerId))
   const author = payload.pull_request.user.login
-  createComment(
+  await createComment(
     payload.repository.owner.login,
     payload.repository.name,
     payload.pull_request.number,

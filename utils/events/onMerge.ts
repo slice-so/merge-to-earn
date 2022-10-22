@@ -25,10 +25,10 @@ export default async function onMerge(payload: PullRequestEvent) {
 
       const message =
         status == 201
-          ? "Transaction has been proposed successfully on the gnosis safe 🎉🎉🎉"
+          ? "Transaction has been proposed successfully on the gnosis safe 🎉"
           : "There was an error and the transaction has not been proposed on the Gnosis Safe. Please contact the project's maintainers."
 
-      createComment(
+      await createComment(
         payload.repository.owner.login,
         payload.repository.name,
         payload.pull_request.number,

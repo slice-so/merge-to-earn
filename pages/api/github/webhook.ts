@@ -28,17 +28,13 @@ export default async function handler(
   const isCommentOnPR = body.issue?.state == "open" && body.comment
 
   if (verified) {
-    try {
-      isCommentOnPR
-        ? await onComment(body)
-        : isPullRequestOpened
-        ? await onPrOpened(body)
-        : isPullRequestMerged
-        ? await onMerge(body)
-        : res.status(400).json({ message: "Event not found" })
-    } catch (error) {
-      res.status(500).json({ message: error.message })
-    }
+    isCommentOnPR
+      ? await onComment(body)
+      : isPullRequestOpened
+      ? await onPrOpened(body)
+      : isPullRequestMerged
+      ? await onMerge(body)
+      : res.status(400).json({ message: "Event not found" })
 
     res.status(200).json({ message: "OK" })
   } else {

@@ -57,5 +57,3 @@ Everything is handled transparently on-chain, while Github settings and permissi
 - [Merge to earn - website](mte.slice.so)
 - [Slice protocol](https://slice.so)
 - [Discord](https://discord.gg/c7puDHjgMU)
-
-<!-- Test -->

@@ -4,8 +4,8 @@
 
 ## Install
 
-- [Install Merge to earn](https://github.com/apps/merge-to-earn/installations/new/) Github app on the one or more repositories
-- Initialize the app for a repo on [mte.slice.so](mte.slice.so) by following the [setup process](#setup-process)
+1. [Install Merge to earn](https://github.com/apps/merge-to-earn/installations/new/) Github app on the one or more repositories
+2. Initialize the app for a repo on [mte.slice.so](mte.slice.so) by following the [setup process](#setup-process)
 
 ### Setup process
 
@@ -43,7 +43,7 @@ When a PR is merged:
 
 As a result, contributors are retributed proportionally to their work and receive earnings based on when their PRs were merged.
 
-Everything is handled transparently on-chain thanks to MTE, while Github settings and permissions can be used to customize what should happen between opening and merging a PR.
+Everything is handled transparently on-chain, while Github settings and permissions can be used to customize what happens between opening and merging a PR.
 
 ## Notes
 

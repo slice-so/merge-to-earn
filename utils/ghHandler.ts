@@ -67,7 +67,8 @@ export async function getComments(
   const { data } = await octokit.rest.issues.listComments({
     owner,
     repo,
-    issue_number
+    issue_number,
+    per_page: 100
   })
   return data
 }

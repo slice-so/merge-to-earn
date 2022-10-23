@@ -6,6 +6,8 @@ export const formatAccountsToReslice = async (message: string) => {
     /(\| ((0x[a-fA-F0-9]{40})|(.*\.eth \(0x[a-fA-F0-9]{3}___[a-fA-F0-9]{3}\))) \| ([0-9]*) \|)/g
   )
 
+  console.log({ toFormatArray })
+
   const accountsToReslice: Mint[] = []
 
   for (let i = 0; i < toFormatArray.length; i++) {
@@ -16,7 +18,9 @@ export const formatAccountsToReslice = async (message: string) => {
     // TODO: Check if this is right
     if (address.split(" (0x").length == 2) {
       const ensAddress = address.split(" (0x")[0]
+      console.log({ ensAddress })
       formattedAddress = await provider.resolveName(ensAddress.trim())
+      console.log({ formattedAddress })
     }
 
     accountsToReslice.push({
@@ -24,6 +28,7 @@ export const formatAccountsToReslice = async (message: string) => {
       shares: Number(slicesAmount.trim())
     })
   }
+  console.log({ accountsToReslice })
 
   return accountsToReslice
 }

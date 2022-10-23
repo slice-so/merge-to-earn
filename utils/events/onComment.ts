@@ -7,14 +7,13 @@ import { Connection } from "@prisma/client"
 import { getPinnedComment } from "@utils/getPinnedComment"
 
 export default async function onComment(payload: IssueCommentEvent) {
-  const connection: Connection = await getConnection(payload.repository.id)
-
-  const { slicerId, safeAddress } = connection
-
   const text: string = payload.comment.body
   const requiredText = "### Slice distribution request"
 
   if (text.includes(requiredText)) {
+    const connection: Connection = await getConnection(payload.repository.id)
+    const { slicerId, safeAddress } = connection
+
     const splitText = text.split("-")
     let botMessage: string
 

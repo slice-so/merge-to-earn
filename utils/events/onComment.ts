@@ -9,7 +9,6 @@ import { getPinnedComment } from "@utils/getPinnedComment"
 export default async function onComment(payload: IssueCommentEvent) {
   const text: string = payload.comment.body
   const requiredText = "### Slice distribution request"
-  console.log(text)
 
   if (text.includes(requiredText)) {
     const connection: Connection = await getConnection(payload.repository.id)
@@ -28,8 +27,6 @@ export default async function onComment(payload: IssueCommentEvent) {
     )
     // Check if comment's user is the PR owner
     if (payload.comment.user.id === payload.issue.user.id) {
-      console.log(1)
-
       // Set bot message to fire in create comment
       // m is defined based on success
       const [m, success, totalSlices] = await onSlicesRequestMessage(
@@ -68,10 +65,6 @@ export default async function onComment(payload: IssueCommentEvent) {
         }
       }
     } else {
-      console.log(2)
-      console.log(payload.comment.user.id)
-      console.log(payload.issue.user.id)
-
       botMessage =
         "User not authorized, only the PR owner can request slice distributions"
     }

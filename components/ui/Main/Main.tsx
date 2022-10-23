@@ -50,8 +50,6 @@ const Main = () => {
   const [currencies, setCurrencies] = useState<string[]>([])
   const [slicerId, setSlicerId] = useState(0)
 
-  console.log(repo)
-
   const { data: isUnsetRepo } = useSWR(
     repo ? `/api/connection/get?repoId=${repo.repoId}` : null,
     fetcher

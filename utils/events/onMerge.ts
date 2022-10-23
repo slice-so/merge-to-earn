@@ -14,12 +14,10 @@ export default async function onMerge(payload: PullRequestEvent) {
     <PullRequestEvent & IssueCommentEvent>payload
   )
 
-  console.log(2)
   if (pinnedBotComment) {
     const accountsToReslice = await formatAccountsToReslice(
       pinnedBotComment.body
     )
-    console.log(3)
 
     if (accountsToReslice.length) {
       const status = await proposeTransaction(
@@ -27,7 +25,6 @@ export default async function onMerge(payload: PullRequestEvent) {
         safeAddress,
         slicerId
       )
-      console.log(4)
 
       const message =
         status == 201

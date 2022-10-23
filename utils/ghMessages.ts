@@ -43,6 +43,8 @@ export function onPrOpenedMessage(
   To request slices, comment using this template by specifying the **Ethereum addresses** of the contributors involved and the **desired amount of slices** for each.
   
   \`\`\`
+  Include any optional details related to your request here.
+  
   ### Slice distribution request
   
   - contributor.eth : 1000
@@ -57,12 +59,13 @@ export function onPrOpenedMessage(
 // TODO fix params type
 export async function onSlicesRequestMessage(
   slicerId: string | number,
-  splitText: any
+  splitText: string[],
+  indexToStart: number
 ): Promise<[string, boolean, number]> {
   let slicesToBeMinted = 0
   let isSuccess = false
   let totalSlices = 0
-  const newSplitText = splitText.slice(1)
+  const newSplitText = splitText.slice(indexToStart)
   const resolvedArray = []
 
   for (let i = 0; i < newSplitText.length; i++) {

@@ -7,16 +7,19 @@ import { Connection } from "@prisma/client"
 import { getPinnedComment } from "@utils/getPinnedComment"
 
 export default async function onComment(payload: IssueCommentEvent) {
-  const connection: Connection = await getConnection(payload.repository.id)
-
-  const { slicerId, safeAddress } = connection
-
   const text: string = payload.comment.body
   const requiredText = "### Slice distribution request"
-  const splitText = text.split("-")
-  let botMessage: string
 
-  if (splitText[0].trim() === requiredText) {
+  if (text.includes(requiredText)) {
+    const connection: Connection = await getConnection(payload.repository.id)
+    const { slicerId, safeAddress } = connection
+
+    const splitText = text.split("-")
+    let botMessage: string
+
+    const indexToStart =
+      splitText.findIndex((el) => el.includes(requiredText)) + 1
+
     const author = payload.issue.user.login
 
     const pinnedBotComment = await getPinnedComment(
@@ -28,7 +31,8 @@ export default async function onComment(payload: IssueCommentEvent) {
       // m is defined based on success
       const [m, success, totalSlices] = await onSlicesRequestMessage(
         slicerId,
-        splitText
+        splitText,
+        indexToStart
       )
       botMessage = m
 

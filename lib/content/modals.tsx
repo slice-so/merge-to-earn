@@ -14,7 +14,7 @@ export const SETUP = (params: any) => {
   let uploadState: string
   switch (uploadStep) {
     case 1:
-      uploadState = "Sign message on your wallet to delegate Gnosis Safe ..."
+      uploadState = "Sign message on your wallet to delegate Safe ..."
       break
     case 2:
       uploadState = "Creating Slicer ..."
@@ -31,10 +31,9 @@ export const SETUP = (params: any) => {
   }
   return (
     <div className="text-center">
-      <div className="pb-6 text-center">
-        <DoubleText inactive logoText="Setting up" />
+      <div className="pb-10 text-center">
+        <DoubleText inactive logoText="Initializing MTE" />
       </div>
-      <p className="pb-8">Please wait until the process is completed</p>
       <div className="grid items-center grid-cols-6 gap-2 px-4">
         <LoadingStep
           initCondition={uploadStep < 2}

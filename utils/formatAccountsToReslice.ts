@@ -15,7 +15,6 @@ export const formatAccountsToReslice = async (message: string) => {
 
     let formattedAddress = address
 
-    // TODO: Check if this is right
     if (address.split(" (0x").length == 2) {
       const ensAddress = address.split(" (0x")[0]
       console.log({ ensAddress })

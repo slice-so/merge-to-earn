@@ -15,7 +15,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   const installationList = await fetcher(
-    "https://api.github.com/user/installations",
+    "https://api.github.com/user/installations?per_page=100",
     body
   )
 
@@ -28,7 +28,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const data = await Promise.all(
     appInstallations.map((installation) =>
       fetcher(
-        `https://api.github.com/user/installations/${installation.id}/repositories`,
+        `https://api.github.com/user/installations/${installation.id}/repositories?per_page=100`,
         body
       )
     )

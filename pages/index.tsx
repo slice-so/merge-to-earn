@@ -39,7 +39,7 @@ export default function Home() {
               />
             </div>
             <p className="pt-3 font-bold text-gray-500 xs:text-lg">
-              The best reward system for open source development
+              The reward system for open source development
             </p>
           </div>
 
@@ -58,7 +58,8 @@ export default function Home() {
               merged.
             </p>
             <p>
-              Here you can set up a Slicer and Gnosis Safe for your repository.
+              Proceed to initialize MTE for a repo by linking it to a Gnosis
+              Safe and Slicer.
             </p>
           </div>
           <Main />

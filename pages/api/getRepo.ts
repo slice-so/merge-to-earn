@@ -14,7 +14,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     method: "GET"
   }
 
-  // TODO: Can I skip this call? Can I get installationId from elsewhere, for example when authorizing the user?
   const installationList = await fetcher(
     "https://api.github.com/user/installations",
     body
@@ -22,7 +21,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
   const appInstallations: Installation[] =
     installationList.installations.filter(
-      (installation: Installation) => Number(installation.app_id) == 247870
+      (installation: Installation) =>
+        String(installation.app_id) == process.env.GH_APP_ID
     )
 
   const data = await Promise.all(

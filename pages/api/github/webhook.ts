@@ -17,8 +17,6 @@ export default async function handler(
     <string>req.headers["x-hub-signature-256"]
   )
 
-  // console.log(body)
-
   /**
    * If the request is verified the following EVENTS are handled:
    * PR Opened
@@ -31,11 +29,11 @@ export default async function handler(
 
   if (verified) {
     isCommentOnPR
-      ? onComment(body)
+      ? await onComment(body)
       : isPullRequestOpened
-      ? onPrOpened(body)
+      ? await onPrOpened(body)
       : isPullRequestMerged
-      ? onMerge(body)
+      ? await onMerge(body)
       : res.status(400).json({ message: "Event not found" })
 
     res.status(200).json({ message: "OK" })

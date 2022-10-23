@@ -1,18 +1,29 @@
+import { provider } from "./initContracts"
 import { Mint } from "./proposeSafeTransaction"
 
-export const formatAccountsToReslice = (message: string) => {
-  // "### Upcoming slice distribution: \n| Address | Slices |\n| --- | --- |\n| 0xAE38a794E839D045460839ABe288a8e5C28B0fc6 | 10 |\n| jacopo.eth | 20 |"
-
+export const formatAccountsToReslice = async (message: string) => {
   const toFormatArray = message.match(
-    /(\| ((0x[a-fA-F0-9]{40})|.*\.eth) \| ([0-9]*) \|)/g
+    /(\| ((0x[a-fA-F0-9]{40})|(.*\.eth \(0x[a-fA-F0-9]{3}___[a-fA-F0-9]{3}\))) \| ([0-9]*) \|)/g
   )
 
-  return toFormatArray.map((el) => {
-    const [, address, slicesAmount] = el.split("|")
+  const accountsToReslice: Mint[] = []
 
-    return {
-      account: address.trim(),
+  for (let i = 0; i < toFormatArray.length; i++) {
+    const [, address, slicesAmount] = toFormatArray[i].split("|")
+
+    let formattedAddress = address
+
+    // TODO: Check if this is right
+    if (address.split(" (0x").length == 2) {
+      const ensAddress = address.split(" (0x")[0]
+      formattedAddress = await provider.resolveName(ensAddress.trim())
+    }
+
+    accountsToReslice.push({
+      account: formattedAddress.trim(),
       shares: Number(slicesAmount.trim())
-    } as Mint
-  })
+    })
+  }
+
+  return accountsToReslice
 }

@@ -1,19 +1,43 @@
 import { Button, InputSelect } from "@components/ui"
+import { Repository } from "@octokit/webhooks-types"
 import { Dispatch, SetStateAction } from "react"
 
-type Props = {
-  repoId: string
-  setRepoId: Dispatch<SetStateAction<string>>
-  repoList: any
+export type RepoResponse = {
+  installation_id: number
+  total_count: number
+  repositories: Repository[]
 }
 
-const FormGithub = ({ repoId, setRepoId, repoList }: Props) => {
-  const availableRepos = repoList?.repositories.map((el: any) => ({
-    value: el.id,
-    name: el.name
-  }))
+export type Repo = {
+  repoId: number
+  installationId: number
+}
 
-  return repoList?.total_count == 0 ? (
+type Props = {
+  repo: Repo
+  setRepo: Dispatch<SetStateAction<Repo>>
+  repoList: RepoResponse[]
+}
+
+const FormGithub = ({ repo, setRepo, repoList }: Props) => {
+  const availableRepos = repoList
+    ?.map((repoRes) =>
+      repoRes.repositories.map((el: any) => ({
+        value: el.id,
+        name: el.full_name,
+        installationId: repoRes.installation_id
+      }))
+    )
+    .flat()
+
+  const handleSetRepo = (value: string) => {
+    const installationId = availableRepos.find(
+      (repo) => repo.value == value
+    ).installationId
+    setRepo({ repoId: Number(value), installationId })
+  }
+
+  return availableRepos?.length == 0 ? (
     <div>
       <p className="pb-4 font-medium">
         You still have to install the app on your repositories
@@ -40,8 +64,8 @@ const FormGithub = ({ repoId, setRepoId, repoList }: Props) => {
             Install on more repos
           </a>
         }
-        value={repoId}
-        setValue={setRepoId}
+        value={String(repo?.repoId)}
+        setValue={handleSetRepo}
         options={availableRepos}
       />
     </>

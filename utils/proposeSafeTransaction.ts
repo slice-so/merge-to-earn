@@ -115,12 +115,14 @@ const updateAccountsToMint = async (
 
       return tx.to == sliceCoreAddress && decodedSlicerId == Number(slicerId)
     })
-    .pop().data
+    .pop()?.data
 
-  const [, accounts, tokenDiffs] = decoder.decode(
-    ["uint256", "address[]", "int32[]"],
-    "0x" + lastResliceData.slice(10)
-  ) as [number, string[], number[]]
+  const [, accounts, tokenDiffs] = lastResliceData
+    ? decoder.decode(
+        ["uint256", "address[]", "int32[]"],
+        "0x" + lastResliceData.slice(10)
+      )
+    : ([0, [], []] as [number, string[], number[]])
 
   const updatedAccounts = [...accounts]
   const updatedTokenDiffs = [...tokenDiffs]

@@ -1,3 +1,4 @@
+import { Installation } from "@octokit/webhooks-types"
 import fetcher from "@utils/fetcher"
 import type { NextApiRequest, NextApiResponse } from "next"
 
@@ -13,21 +14,32 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     method: "GET"
   }
 
-  // TODO: Can I skip this call? Can I get installationId from elsewhere, for example when authorizing the user?
   const installationList = await fetcher(
     "https://api.github.com/user/installations",
     body
   )
-  const installationId = installationList.installations.find(
-    (installation) => Number(installation.app_id) == 247870
-  ).id
 
-  const data = await fetcher(
-    `https://api.github.com/user/installations/${installationId}/repositories`,
-    body
+  const appInstallations: Installation[] =
+    installationList.installations.filter(
+      (installation: Installation) =>
+        String(installation.app_id) == process.env.GH_APP_ID
+    )
+
+  const data = await Promise.all(
+    appInstallations.map((installation) =>
+      fetcher(
+        `https://api.github.com/user/installations/${installation.id}/repositories`,
+        body
+      )
+    )
   )
 
-  res.status(200).json({ installationId, data })
+  res.status(200).json(
+    data.map((repo, i) => {
+      repo["installation_id"] = appInstallations[i].id
+      return repo
+    })
+  )
 }
 
 export default handler

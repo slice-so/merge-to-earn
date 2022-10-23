@@ -26,7 +26,10 @@ export default async function handler(
   const isPullRequestOpened = body.pull_request && body?.action == "opened"
   const isPullRequestMerged = body.pull_request?.merged == true
   const isCommentOnPR =
-    body.issue?.state == "open" && body.action == "created" && body.comment
+    body.issue?.state == "open" && // PR is open
+    body.action == "created" && // Comment is created
+    String(body.comment.user.id) != process.env.GH_APP_USERID && // Comment is not from the bot
+    body.comment
 
   if (verified) {
     isCommentOnPR

@@ -70,7 +70,7 @@ export default async function onComment(payload: IssueCommentEvent) {
     }
     if (
       pinnedBotComment ||
-      !botMessage.includes("### Upcoming slice distribution")
+      !botMessage.includes("### Scheduled slice distribution")
     ) {
       await createComment(
         payload.repository.owner.login,

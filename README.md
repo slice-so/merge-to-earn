@@ -14,7 +14,7 @@ Merge to earn (MTE) relies on:
 - A [Slicer](https://slice.so), used to split the project's ownership and earnings among multiple contributors;
 - A [Gnosis Safe](gnosis-safe.io/app), typically owned by the project's maintainers, used to approve slice distributions during PR merge.
 
-The setup process is carried out on [mte.slice.so](mte.slice.so) by someone who is both owner of the repo and the safe related to the project. The process consists in:
+The setup process is carried out on [mte.slice.so](mte.slice.so) by someone who is both owner of the repo and the safe related to the project. It consists in:
 
 1. Delegating MTE to propose transactions on the appointed safe;
 2. Creating a slicer to represent the project.
@@ -32,6 +32,8 @@ When a PR is merged:
 - A transaction to mint the agreed amount of slices is proposed on the project's Gnosis Safe;
 - Once the maintainers sign and submit the transaction, the contributors will receive the agreed-upon slices. This allows them to receive a proportional share of earnings related to the project's Slicer from that moment onward, directly on [slice.so](https://slice.so).
 
+> See it in action on this [Demo PR](https://github.com/slice-so/merge-to-earn/pull/4)
+
 ### Example configuration
 
 - A project starts with 1000 slices to each of its 5 creators, for their initial work. The creators share equal ownership over the project's slicer, and those who act as maintainers are also owners of the Gnosis Safe which approves new slice distributions.
@@ -41,7 +43,7 @@ When a PR is merged:
 - A new contributor opens a PR and asks for 500 slices for its work. Once the PR is merged and the transaction is submitted on the safe, slices are minted to its wallet.
   - Any payment sent to the slicer at this stage will be split: ~9% to the contributor, ~18% to each project creator
 
-As a result, contributors are retributed proportionally to their work and receive earnings based on when their PRs were merged.
+As a result, **contributors are retributed proportionally to their work and receive earnings based on when their PRs were merged.**
 
 Everything is handled transparently on-chain, while Github settings and permissions can be used to customize what happens between opening and merging a PR.
 

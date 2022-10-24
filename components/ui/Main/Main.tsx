@@ -26,7 +26,6 @@ import { signIn, useSession } from "next-auth/react"
 import fetcher from "@utils/fetcher"
 import useSWR from "swr"
 import { Repo, RepoResponse } from "../FormGithub/FormGithub"
-import { Repository } from "@octokit/webhooks-types"
 
 const Main = () => {
   const addRecentTransaction = useAddRecentTransaction()

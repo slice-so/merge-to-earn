@@ -106,7 +106,7 @@ export async function onSlicesRequestMessage(
   totalSlices = Number(await sliceCore.totalSupply(slicerId))
 
   return [
-    "### Upcoming slice distribution \n| Address | Slices |\n| --- | --- |\n" +
+    "### Scheduled slice distribution \n| Address | Slices |\n| --- | --- |\n" +
       resolvedArray.join(" \n ") +
       "\n \n > **Slices to be minted:** " +
       String(slicesToBeMinted) +

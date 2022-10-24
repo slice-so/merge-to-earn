@@ -21,7 +21,7 @@ const Navbar = () => {
     <header className="shadow-sm">
       <Container>
         <nav className="relative px-3 sm:px-6 h-[4.25rem] items-center mx-auto flex justify-between">
-          <div className="flex items-center w-10 h-10">
+          <div className="flex items-center w-6 h-6">
             <Link href="/">
               <a aria-label="Merge to earn logo">
                 <Logo />

@@ -107,20 +107,18 @@ const updateAccountsToMint = async (
   const decoder = ethers.utils.defaultAbiCoder
 
   const res = await fetcher(baseUrl + endpoint)
-  const lastResliceData = res?.results
-    .filter((tx) => {
-      const decodedSlicerId = Number(
-        decoder.decode(["uint256"], "0x" + tx.data.slice(10, 74))
-      )
+  const lastReslice = res?.results.filter((tx) => {
+    const decodedSlicerId = Number(
+      decoder.decode(["uint256"], "0x" + tx.data.slice(10, 74))
+    )
 
-      return tx.to == sliceCoreAddress && decodedSlicerId == Number(slicerId)
-    })
-    .pop()?.data
+    return tx.to == sliceCoreAddress && decodedSlicerId == Number(slicerId)
+  })[0]
 
-  const [, accounts, tokenDiffs] = lastResliceData
+  const [, accounts, tokenDiffs] = lastReslice
     ? decoder.decode(
         ["uint256", "address[]", "int32[]"],
-        "0x" + lastResliceData.slice(10)
+        "0x" + lastReslice.data.slice(10)
       )
     : ([0, [], []] as [number, string[], number[]])
 

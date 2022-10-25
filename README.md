@@ -5,7 +5,7 @@
 ## Install
 
 1. [Install Merge to earn](https://github.com/apps/merge-to-earn/installations/new/) Github app on one or more repositories
-2. Initialize the app for each repo on [mte.slice.so](mte.slice.so) by following the [setup process](#setup-process)
+2. Initialize the app for each repo on [mte.slice.so](https://mte.slice.so) by following the [setup process](#setup-process)
 
 ### Setup process
 
@@ -14,7 +14,7 @@ Merge to earn (MTE) relies on:
 - A [Slicer](https://slice.so), used to split the project's ownership and earnings among multiple contributors;
 - A [Gnosis Safe](gnosis-safe.io/app), typically owned by the project's maintainers, used to approve slice distributions during PR merge.
 
-The setup process is carried out on [mte.slice.so](mte.slice.so) by someone who is both owner of the repo and the safe related to the project. It consists in:
+The setup process is carried out on [mte.slice.so](https://mte.slice.so) by someone who is both owner of the repo and the safe related to the project. It consists in:
 
 1. Delegating MTE to propose transactions on the appointed safe;
 2. Creating a slicer to represent the project.

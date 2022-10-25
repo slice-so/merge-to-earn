@@ -1,4 +1,4 @@
-# Merge to earn
+![Merge to earn banner](/public/twitter_card.jpg)
 
 **Automate rewarding contributors with a slice of ownership over a project and its earnings, when pull requests are merged.**
 

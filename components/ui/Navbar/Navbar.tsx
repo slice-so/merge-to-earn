@@ -18,7 +18,7 @@ const Navbar = () => {
   const [showDropdown, setShowDropdown] = useState(false)
 
   return (
-    <header className="shadow-sm">
+    <header className="shadow-sm dark:bg-black">
       <Container>
         <nav className="relative px-3 sm:px-6 h-[4.25rem] items-center mx-auto flex justify-between">
           <div className="flex items-center w-6 h-6">
@@ -56,7 +56,7 @@ const Navbar = () => {
           </div>
         </nav>
       </Container>
-      <hr className="w-full border-gray-200" />
+      <hr className="w-full border-gray-200 border-opacity-60" />
     </header>
   )
 }

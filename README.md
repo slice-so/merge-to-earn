@@ -60,10 +60,10 @@ Everything is handled transparently on-chain, while Github settings and permissi
 - Each PR will have a pinned MTE comment showing the scheduled slice distribution.
 - Contributors can manage their slices and withdraw any earnings on [slice.so](https://slice.so). Slices are ERC1155 tokens so they can also be managed on the owner's ETH wallet and can be freely transferred (learn more on [slice.so](https://slice.so)).
 - If a PRs is merged while previous mint proposals haven&apos;t been executed, **a new transaction will be proposed which includes all those not yet executed queued on the same nonce**. It is thus possible combining multiple proposals in a single transaction, by executing the last transaction proposed by MTE on a safe.
-- When a slicer is created on mte.slice.so, the appointed Gnosis Safe becomes its controller and is able to **mint or burn new slices** or sell products on the slicer's decentralized store.
+- When a slicer is created on [mte.slice.so](https://mte.slice.so), the appointed Gnosis Safe becomes its controller and is able to **mint or burn new slices** or sell products on the slicer's decentralized store.
 
 ## Learn more
 
-- [Merge to earn - website](mte.slice.so)
+- [Merge to earn - website](https://mte.slice.so)
 - [Slice protocol](https://slice.so)
 - [Support (Discord)](https://discord.gg/c7puDHjgMU)

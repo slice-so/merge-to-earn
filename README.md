@@ -62,6 +62,32 @@ Everything is handled transparently on-chain, while Github settings and permissi
 - If a PRs is merged while previous mint proposals haven&apos;t been executed, **a new transaction will be proposed which includes all those not yet executed queued on the same nonce**. It is thus possible to combine multiple proposals in a single transaction, by executing the last transaction proposed by MTE on a safe for each nonce.
 - When a slicer is created on [mte.slice.so](https://mte.slice.so), the appointed Gnosis Safe becomes its controller and is able to **mint or burn new slices** or sell products on the slicer's decentralized store.
 
+## Addressing security concerns
+
+Merge to earn projects can be considered safe against attackers attempting to steal earnings by compromising Github accounts or ETH wallets.
+
+In fact, compromising a project is not worth for an attacker as it:
+
+- Requires satisfying hard requirements;
+- Yields low rewards;
+- Can be easily and quickly mitigated by project owners.
+
+### Github account compromised
+
+Let's consider the case where an attacker gains access to a maintainer's Github account. In this case, **they would be able to merge fake PRs and propose malicious transactions to the project's multisig** to reward themselves with slices.
+
+However, **nothing would happen until the quorum of multisig owners execute the malicious transaction**. If maintainers are aware an attack has happened, or just check the accuracy of the transactions to be executed (as it's always advised to) this scenario is highly unlikely to happen.
+
+But even if maintainers mistakenly execute a malicious transaction, **they still have plenty of time to get the situation under control by reverting the undesired outcome**. In this case the attacker only gets part of the earnings that were received by the project between the moment their transaction was executed and when it was reverted, which in most cases should be a negligible amount.
+
+### Gnosis Safe compromised
+
+A more complex attack would involve the attacker obtaining the private keys of enough multisig owners' wallets, allowing them to **autonomously execute transactions on the project's Gnosis Safe**. This is extremely hard to achieve, especially for multisig with a high quorum, but let's consider this scenario anyway.
+
+Due to how slicers are designed, **an attacker wouldn't still be able to get the project earnings received until that point, but only what was received after he gained control** and executed a malicious transaction. The Slice protocol has been designed to safeguard against this kind of attacks.
+
+On the contrary, to mitigate such an attack, **project owners just need to reinitialize MTE for their repository with a new slicer and multisig**, distribute ownership to contributors as it was before the attack, and redirect any future earnings to the new slicer. This is technically trivial and can be done in minutes, rendering an attacker powerless.
+
 ## Learn more
 
 - [Merge to earn - website](https://mte.slice.so)

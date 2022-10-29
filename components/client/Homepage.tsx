@@ -1,3 +1,5 @@
+"use client"
+
 import { NextSeo } from "next-seo"
 import { Container, DoubleText, Main } from "@components/ui"
 import {

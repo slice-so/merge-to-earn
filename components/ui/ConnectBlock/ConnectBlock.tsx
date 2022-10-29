@@ -1,3 +1,5 @@
+"use client"
+
 import { useAppContext } from "@components/ui/context"
 import { ConnectButton } from "@rainbow-me/rainbowkit"
 import saEvent from "@utils/saEvent"

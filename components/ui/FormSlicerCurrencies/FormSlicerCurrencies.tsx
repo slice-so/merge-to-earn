@@ -1,3 +1,5 @@
+"use client"
+
 import React, { Dispatch, SetStateAction } from "react"
 import Add from "@components/icons/Add"
 import FormSlicerCurrencyAddress from "../FormSlicerCurrencyAddress"

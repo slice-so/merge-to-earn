@@ -1,3 +1,5 @@
+"use client"
+
 import { Dispatch, SetStateAction, useState } from "react"
 import { Input } from "@components/ui"
 import Delete from "@components/icons/Delete"

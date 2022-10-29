@@ -37,14 +37,13 @@ const DoubleText: FC<Props> = ({
           {logoText}
         </span>
       ) : (
-        <Link href="/">
-          <a
-            className={`${
-              inverted ? "text-white" : "text-black"
-            } relative z-10 !font-black ${size || "text-2xl md:text-3xl"}`}
-          >
-            {logoText}
-          </a>
+        <Link
+          href="/"
+          className={`${
+            inverted ? "text-white" : "text-black"
+          } relative z-10 !font-black ${size || "text-2xl md:text-3xl"}`}
+        >
+          {logoText}
         </Link>
       )}
       <span

@@ -1,3 +1,5 @@
+"use client"
+
 import Chevron from "@components/icons/Chevron"
 import { useState } from "react"
 

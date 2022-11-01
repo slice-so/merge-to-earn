@@ -1,3 +1,5 @@
+"use client"
+
 import { createContext, useContext, useEffect, useState } from "react"
 import { View } from "@lib/content/modals"
 import { useAccount, useProvider } from "wagmi"

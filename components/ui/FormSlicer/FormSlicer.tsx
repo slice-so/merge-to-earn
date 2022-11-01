@@ -1,3 +1,5 @@
+"use client"
+
 import Add from "@components/icons/Add"
 import { FormSlicerCurrencies, FormSlicerInput, Question } from "@components/ui"
 import { Dispatch, SetStateAction, useEffect } from "react"

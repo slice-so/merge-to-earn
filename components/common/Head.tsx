@@ -52,12 +52,6 @@ const Head: FC = () => {
         />
         <link rel="shortcut icon" href="/favicon/apple-touch-icon.png" />
         <link rel="manifest" href="/favicon/site.webmanifest" />
-        <Script
-          id="sa_event"
-          dangerouslySetInnerHTML={{
-            __html: `window.sa_event=window.sa_event||function(){var a=[].slice.call(arguments);window.sa_event.q?window.sa_event.q.push(a):window.sa_event.q=[a]};`
-          }}
-        />
       </NextHead>
     </>
   )

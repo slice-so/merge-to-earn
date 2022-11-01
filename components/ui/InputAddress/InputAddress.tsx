@@ -1,3 +1,5 @@
+"use client"
+
 import resolveEns from "utils/resolveEns"
 import React, {
   Dispatch,

@@ -1,10 +1,12 @@
+"use client"
+
 import Link from "next/link"
 import Logo from "@components/icons/Logo"
 import Nightwind from "@components/icons/Nightwind"
 import { Container } from "@components/ui"
 import { ConnectButton } from "@rainbow-me/rainbowkit"
 import { useSession } from "next-auth/react"
-import Image from "next/future/image"
+import Image from "next/image"
 import Chevron from "@components/icons/Chevron"
 import dynamic from "next/dynamic"
 import { useState } from "react"
@@ -22,10 +24,8 @@ const Navbar = () => {
       <Container>
         <nav className="relative px-3 sm:px-6 h-[4.25rem] items-center mx-auto flex justify-between">
           <div className="flex items-center w-6 h-6">
-            <Link href="/">
-              <a aria-label="Merge to earn logo">
-                <Logo />
-              </a>
+            <Link href="/" aria-label="Merge to earn logo">
+              <Logo />
             </Link>
           </div>
           <div className="relative z-10 flex items-center space-x-4 sm:space-x-6">

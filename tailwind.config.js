@@ -4,6 +4,7 @@ module.exports = {
   mode: "jit",
   darkMode: "class",
   purge: [
+    "./app/**/*.{js,ts,jsx,tsx}",
     "./pages/**/*.tsx",
     "./pages/**/*.js",
     "./components/**/*.tsx",

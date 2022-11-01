@@ -35,13 +35,19 @@
         "utils/*"
       ]
     },
-    "incremental": true
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "javascript/themeContext.js"
+    "javascript/themeContext.js",
+    ".next/types/**/*.ts"
   ],
   "exclude": [
     "node_modules"

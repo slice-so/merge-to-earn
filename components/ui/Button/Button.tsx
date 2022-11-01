@@ -36,7 +36,7 @@ const Button: FC<ButtonProps> = (props) => {
 
   return href ? (
     !external ? (
-      <Link href={href} passHref>
+      <Link href={href}>
         <button className={rootClassName}>{label}</button>
       </Link>
     ) : targetBlank ? (

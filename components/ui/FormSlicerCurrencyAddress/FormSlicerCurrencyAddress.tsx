@@ -1,3 +1,5 @@
+"use client"
+
 import Delete from "@components/icons/Delete"
 import { Dispatch, SetStateAction, useState } from "react"
 import InputAddress from "../InputAddress"

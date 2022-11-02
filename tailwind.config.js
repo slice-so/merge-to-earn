@@ -51,7 +51,8 @@ module.exports = {
             color: theme("colors.black"),
             a: {
               textDecorationThickness: "2px",
-              textUnderlineOffset: "1px"
+              textUnderlineOffset: "1px",
+              textDecorationColor: theme("colors.blue.600")
             },
             h1: {
               color: theme("colors.black"),
@@ -66,7 +67,7 @@ module.exports = {
               fontSize: "1.12em"
             },
             blockquote: {
-              borderLeftColor: theme("colors.random2.600")
+              borderLeftColor: theme("colors.blue.600")
             },
             "blockquote p:first-of-type::before": false,
             "blockquote p:last-of-type::after": false,
@@ -83,7 +84,8 @@ module.exports = {
             color: theme("colors.black"),
             a: {
               textDecorationThickness: "2px",
-              textUnderlineOffset: "1px"
+              textUnderlineOffset: "1px",
+              textDecorationColor: theme("colors.blue.600")
             },
             h1: {
               color: theme("colors.black"),
@@ -98,7 +100,7 @@ module.exports = {
               fontSize: "1.12em"
             },
             blockquote: {
-              borderLeftColor: theme("colors.random2.600")
+              borderLeftColor: theme("colors.blue.600")
             },
             "blockquote p:first-of-type::before": false,
             "blockquote p:last-of-type::after": false,

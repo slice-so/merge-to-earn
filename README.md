@@ -72,7 +72,7 @@ In fact, compromising a project is not worth for an attacker as it:
 - Yields low rewards;
 - Can be easily and quickly mitigated by project owners.
 
-### Github account compromised
+#### Github account compromised
 
 Let's consider the case where an attacker gains access to a maintainer's Github account. In this case, **they would be able to merge fake PRs and propose malicious transactions to the project's multisig** to reward themselves with slices.
 
@@ -80,7 +80,7 @@ However, **nothing would happen until the quorum of multisig owners execute the 
 
 But even if maintainers mistakenly execute a malicious transaction, **they still have plenty of time to get the situation under control by reverting the undesired outcome**. In this case the attacker only gets part of the earnings that were received by the project between the moment their transaction was executed and when it was reverted, which in most cases should be a negligible amount.
 
-### Gnosis Safe compromised
+#### Gnosis Safe compromised
 
 A more complex attack would involve the attacker obtaining the private keys of enough multisig owners' wallets, allowing them to **autonomously execute transactions on the project's Gnosis Safe**. This is extremely hard to achieve, especially for multisig with a high quorum, but let's consider this scenario anyway.
 

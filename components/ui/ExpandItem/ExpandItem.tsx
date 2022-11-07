@@ -1,4 +1,5 @@
 import Chevron from "@components/icons/Chevron"
+import saEvent from "@utils/saEvent"
 import { useState } from "react"
 
 type Props = {
@@ -7,6 +8,7 @@ type Props = {
   id?: string
   anchor?: string
   wrapperClassName?: string
+  saEventText?: string
 }
 
 const ExpandItem = ({
@@ -14,14 +16,18 @@ const ExpandItem = ({
   content,
   id = label,
   anchor,
-  wrapperClassName
+  wrapperClassName,
+  saEventText
 }: Props) => {
   const [showAnswer, setShowAnswer] = useState(anchor == id)
   return (
     <>
       <div
         className={`flex items-center pt-5 border-b-2 nightwind-prevent border-blue-600 cursor-pointer group ${wrapperClassName}`}
-        onClick={() => setShowAnswer((showAnswer) => !showAnswer)}
+        onClick={() => {
+          saEventText ? saEvent(saEventText) : null
+          setShowAnswer((showAnswer) => !showAnswer)
+        }}
         id={id}
       >
         <div className="flex-shrink-0 w-6 h-6 mb-2 mr-2">

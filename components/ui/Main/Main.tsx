@@ -26,6 +26,7 @@ import { signIn, useSession } from "next-auth/react"
 import fetcher from "@utils/fetcher"
 import useSWR from "swr"
 import { Repo, RepoResponse } from "../FormGithub/FormGithub"
+import saEvent from "@utils/saEvent"
 
 const Main = () => {
   const addRecentTransaction = useAddRecentTransaction()
@@ -133,10 +134,12 @@ const Main = () => {
     setLoading(true)
     setUploadStep(1)
     setSlicerId(0)
+    saEvent("setup_init")
 
     try {
       const res = await signMessageAsync()
       if (!res) {
+        saEvent("setup_fail_signature")
         setUploadStep(4) // fail
       } else {
         setUploadStep(2)
@@ -179,15 +182,19 @@ const Main = () => {
           }
           const res = await fetch("/api/connection/create", body)
           if (res.status == 200) {
+            saEvent("setup_success")
             setUploadStep(5)
           } else {
+            saEvent("setup_fail_connection_create")
             setUploadStep(4) // fail
           }
         } else {
+          saEvent("setup_fail_tx")
           setUploadStep(4) // fail
         }
       }
     } catch (err) {
+      saEvent(`setup_fail_${err}`)
       setUploadStep(4)
     }
 
@@ -243,6 +250,7 @@ const Main = () => {
                     setCurrencies={setCurrencies}
                   />
                 }
+                saEventText="slicer_settings"
               />
             </div>
 
@@ -272,7 +280,10 @@ const Main = () => {
           <span>Sign in with Github</span>
         </span>
       }
-      onClick={() => signIn("github")}
+      onClick={() => {
+        saEvent("signin_github_attempt")
+        signIn("github")
+      }}
       color="text-white bg-black hover:bg-gray-700 focus:bg-gray-700 transition-colors duration-150"
     />
   )

@@ -160,6 +160,8 @@ const Main = () => {
           const tokenId = eventLogs?.find((log) => log.name === "TokenSliced")
             .args.tokenId
 
+          console.log({ eventLogs, tokenId })
+
           setSlicerId(Number(tokenId))
 
           launchConfetti()
@@ -178,6 +180,8 @@ const Main = () => {
             method: "POST"
           }
           const res = await fetch("/api/connection/create", body)
+          console.log(await res.json())
+
           if (res.status == 200) {
             setUploadStep(5)
           } else {

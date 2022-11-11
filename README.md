@@ -61,6 +61,23 @@ Everything is handled transparently on-chain, while Github settings and permissi
 - Contributors can manage their slices and withdraw any earnings on [slice.so](https://slice.so). Slices are ERC1155 tokens so they can also be managed on the owner's ETH wallet and can be freely transferred (learn more on [slice.so](https://slice.so)).
 - If a PRs is merged while previous mint proposals haven&apos;t been executed, **a new transaction will be proposed which includes all those not yet executed queued on the same nonce**. It is thus possible to combine multiple proposals in a single transaction, by executing the last transaction proposed by MTE on a safe for each nonce.
 - When a slicer is created on [mte.slice.so](https://mte.slice.so), the appointed Gnosis Safe becomes its controller and is able to **mint or burn new slices** or sell products on the slicer's decentralized store.
+- The max total number of slices that can be created for a project is 4B. See below the suggestion on [how to quantify slices as reward](#how-many-slices-to-give-when-merging-prs).
+
+## Suggestions for maintainers
+
+<details>
+<summary>How many slices to give when merging PRs</summary>
+
+- We suggest rewarding 1 slice for 1$ value of work. This greatly facilitates estimating what amount to reward for PRs, issues and when initializing a repo.
+
+</details>
+
+<details>
+<summary>Add reward tags to issues and PRs</summary>
+
+- To incentivise and prioritise contributions, you can add tags to issues and PRs to signal the potential reward for contributors.
+
+</details>
 
 ## Addressing security concerns
 

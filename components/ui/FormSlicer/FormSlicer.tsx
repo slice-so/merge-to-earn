@@ -1,5 +1,6 @@
 import Add from "@components/icons/Add"
 import { FormSlicerCurrencies, FormSlicerInput, Question } from "@components/ui"
+import saEvent from "@utils/saEvent"
 import { Dispatch, SetStateAction, useEffect } from "react"
 import { useAppContext } from "../context"
 
@@ -35,6 +36,7 @@ const FormSlicer = ({
   }
 
   const handleAddOwner = () => {
+    saEvent("add_owner")
     if (slicerOwners.length == 0) {
       setSlicerOwners([{ account, shares: 1000 }])
     } else {
@@ -61,6 +63,7 @@ const FormSlicer = ({
               href="https://slice.so"
               target="_blank"
               rel="noreferrer"
+              onClick={() => saEvent("slice_link_settings")}
             >
               slice.so
             </a>

@@ -32,11 +32,11 @@ export function onPrOpenedMessage(
   const today = new Date()
   return `### 👋 Gm @${author}
 
-  This repository uses [Merge to earn](https://github.com/slice-so/merge-to-earn) to reward contributors with a piece of [Slicer #${slicerId}](slice.so/slicer/${slicerId}).
+  This repository uses [Merge to earn](https://github.com/slice-so/merge-to-earn) to reward contributors with a piece of [Slicer #${slicerId}](https://slice.so/slicer/${slicerId}).
   
   When merging a pull request, contributors can **receive an agreed number of slices 🍰 (ERC1155 tokens) representing ownership over the project and its earnings**. 
   
-  Funds earned can be claimed anytime on [slice.so](slice.so) while slices can be transferred and managed from either the Slice website or directly from your ETH wallet.
+  Funds earned can be claimed anytime on [slice.so](https://slice.so) while slices can be transferred and managed from either the Slice website or directly from your ETH wallet.
 
   ---
   

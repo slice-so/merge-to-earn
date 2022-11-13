@@ -7,6 +7,7 @@ import {
   domain
 } from "@components/common/Head"
 import { accounts } from "@components/ui/Social/Social"
+import saEvent from "@utils/saEvent"
 
 export default function Home() {
   return (
@@ -51,6 +52,7 @@ export default function Home() {
                   target="_blank"
                   rel="noreferrer"
                   className="highlight"
+                  onClick={() => saEvent("hero_github_link")}
                 >
                   Merge to earn
                 </a>{" "}

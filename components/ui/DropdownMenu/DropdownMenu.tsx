@@ -1,4 +1,5 @@
 import Cross from "@components/icons/Cross"
+import saEvent from "@utils/saEvent"
 import { signOut } from "next-auth/react"
 import { Dispatch, SetStateAction } from "react"
 import { DropdownMenuElement } from ".."
@@ -12,7 +13,10 @@ function DropdownMenu({}: Props) {
       <DropdownMenuElement
         image={<Cross />}
         label="Sign out from Github"
-        onClick={() => signOut()}
+        onClick={() => {
+          saEvent("signout_github")
+          signOut()
+        }}
       />
     </div>
   )

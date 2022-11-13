@@ -1,6 +1,7 @@
 import { InputSelect } from "@components/ui"
 import fetcher from "@utils/fetcher"
 import { Message } from "@utils/handleMessage"
+import saEvent from "@utils/saEvent"
 import { Dispatch, SetStateAction } from "react"
 import useSWR from "swr"
 import { useAppContext } from "../context"
@@ -27,6 +28,11 @@ const FormSafes = ({
     value: el
   }))
 
+  const handleSetSafe = (value: string) => {
+    saEvent("set_safe")
+    setSafeAddress(value)
+  }
+
   return (
     <div className="space-y-6">
       <div>
@@ -42,6 +48,7 @@ const FormSafes = ({
                 target="_blank"
                 rel="noreferrer"
                 className="text-blue-600 hover:underline"
+                onClick={() => saEvent("gnosis_link")}
               >
                 Gnosis Safe app
               </a>
@@ -63,7 +70,7 @@ const FormSafes = ({
             </>
           }
           value={safeAddress}
-          setValue={setSafeAddress}
+          setValue={handleSetSafe}
           options={formattedOwnedSafes}
           required
         />

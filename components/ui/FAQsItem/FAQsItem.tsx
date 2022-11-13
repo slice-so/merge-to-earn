@@ -1,4 +1,5 @@
 import Chevron from "@components/icons/Chevron"
+import saEvent from "@utils/saEvent"
 import { useState } from "react"
 
 type Props = {
@@ -21,7 +22,10 @@ const FAQsItem = ({
     <li>
       <div
         className={`flex items-center pt-5 border-b-2 border-blue-600 cursor-pointer group ${wrapperClassName}`}
-        onClick={() => setShowAnswer((showAnswer) => !showAnswer)}
+        onClick={() => {
+          saEvent(`faq_${id}`)
+          setShowAnswer((showAnswer) => !showAnswer)
+        }}
         id={id}
       >
         <div className="flex-shrink-0 w-6 h-6 mb-2 mr-2">

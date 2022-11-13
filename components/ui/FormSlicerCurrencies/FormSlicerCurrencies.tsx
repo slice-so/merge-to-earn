@@ -1,6 +1,7 @@
 import React, { Dispatch, SetStateAction } from "react"
 import Add from "@components/icons/Add"
 import FormSlicerCurrencyAddress from "../FormSlicerCurrencyAddress"
+import saEvent from "@utils/saEvent"
 
 type Props = {
   currencies: string[]
@@ -8,6 +9,11 @@ type Props = {
 }
 
 const FormSlicerCurrencies = ({ currencies, setCurrencies }: Props) => {
+  const handleAddCurrency = () => {
+    saEvent("add_currency")
+    setCurrencies([...currencies, ""])
+  }
+
   return (
     <div className="text-left">
       <div className="pb-3">
@@ -36,12 +42,12 @@ const FormSlicerCurrencies = ({ currencies, setCurrencies }: Props) => {
       </div>
       <div className="mt-4 inline-flex ml-[9px] text-green-500 group">
         <Add
-          onClick={() => setCurrencies([...currencies, ""])}
+          onClick={() => handleAddCurrency()}
           className="mr-3 cursor-pointer opacity-80 group-hover:opacity-100"
         />
         <p
           className="font-medium cursor-pointer opacity-80 group-hover:opacity-100"
-          onClick={() => setCurrencies([...currencies, ""])}
+          onClick={() => handleAddCurrency()}
         >
           Add currency
         </p>

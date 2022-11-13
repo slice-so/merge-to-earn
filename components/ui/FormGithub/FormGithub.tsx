@@ -1,5 +1,6 @@
 import { Button, InputSelect } from "@components/ui"
 import { Repository } from "@octokit/webhooks-types"
+import saEvent from "@utils/saEvent"
 import { Dispatch, SetStateAction } from "react"
 
 export type RepoResponse = {
@@ -31,6 +32,7 @@ const FormGithub = ({ repo, setRepo, repoList }: Props) => {
     .flat()
 
   const handleSetRepo = (value: string) => {
+    saEvent("set_repo")
     const installationId = availableRepos.find(
       (repo) => repo.value == value
     ).installationId
@@ -47,6 +49,7 @@ const FormGithub = ({ repo, setRepo, repoList }: Props) => {
         label="Install Merge to earn"
         href="https://github.com/apps/merge-to-earn/installations/new/"
         external
+        onClick={() => saEvent("install_main")}
       />
     </div>
   ) : (
@@ -60,6 +63,7 @@ const FormGithub = ({ repo, setRepo, repoList }: Props) => {
             href="https://github.com/apps/merge-to-earn/installations/new/"
             target="_blank"
             rel="noreferrer"
+            onClick={() => saEvent("install_more")}
           >
             Install on more repos
           </a>

@@ -66,9 +66,9 @@ Everything is handled transparently on-chain, while Github settings and permissi
 ## Suggestions for maintainers
 
 <details>
-<summary>How many slices to give when merging PRs</summary>
+<summary>Define in advance how slice rewards are calculated</summary>
 
-- We suggest rewarding 1 slice for 1$ value of work. This greatly facilitates estimating what amount to reward for PRs, issues and when initializing a repo.
+- We suggest rewarding 1 slice for 1$ value of work, or something like that. This greatly facilitates estimating how many slices to give to initial and future contributors.
 
 </details>
 
@@ -78,6 +78,15 @@ Everything is handled transparently on-chain, while Github settings and permissi
 - To incentivise and prioritise contributions, you can add tags to issues and PRs to signal the potential reward for contributors.
 
 </details>
+
+## Gas cost considerations
+
+Merge to earn requires executing transaction on the Ethereum blockchain in the following instances:
+
+- Setting up a project: The [setup process](#setup-process) involves creating a slicer for a project. Costs around **400k gas**, around $4-8\*
+- Executing a safe transaction after merging PRs: Gas costs are variable and generally amount to **100k gas for transaction**, around $1-2\* (note that multiple PRs can be batched into a single transaction, see 3rd bullet point in [notes](#notes))
+
+> \*Based on an ETH price of $1000 and a gas price of 10-20 gwei
 
 ## Addressing security concerns
 

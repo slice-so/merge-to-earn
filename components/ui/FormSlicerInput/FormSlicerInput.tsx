@@ -50,7 +50,7 @@ const FormSlicerInput = ({
       </div>
       <div className="col-span-7 xs:col-span-5 md:col-span-7">
         <InputAddress
-          address={account}
+          address={account as `0x${string}`}
           onChange={handleChangeAddress}
           required={sharesAmount != 0}
           resolvedAddress={resolvedAddress}

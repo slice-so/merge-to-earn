@@ -9,11 +9,7 @@ import {
 import handleMessage, { Message } from "@utils/handleMessage"
 import { ContractReceipt, ethers } from "ethers"
 import { useEffect, useState } from "react"
-import {
-  useContractWrite,
-  usePrepareContractWrite,
-  useSignMessage
-} from "wagmi"
+import { useContractWrite, usePrepareContractWrite } from "wagmi"
 import { useAppContext } from "../context"
 import { SlicerOwner } from "../FormSlicer/FormSlicer"
 import sliceCore from "abi/SliceCore.json"
@@ -27,6 +23,7 @@ import fetcher from "@utils/fetcher"
 import useSWR from "swr"
 import { Repo, RepoResponse } from "../FormGithub/FormGithub"
 import saEvent from "@utils/saEvent"
+import { useEthersSigner } from "@utils/ethers"
 
 const Main = () => {
   const addRecentTransaction = useAddRecentTransaction()
@@ -41,13 +38,14 @@ const Main = () => {
   const delegateAddress = process.env.NEXT_PUBLIC_DELEGATE
 
   const [loading, setLoading] = useState(false)
+  const [signature, setSignature] = useState("")
   const [uploadStep, setUploadStep] = useState(0)
   const [message, setMessage] = useState<Message>()
 
   const [repo, setRepo] = useState<Repo>()
   const [safeAddress, setSafeAddress] = useState("")
   const [slicerOwners, setSlicerOwners] = useState<SlicerOwner[]>([])
-  const [currencies, setCurrencies] = useState<string[]>([])
+  const [currencies, setCurrencies] = useState<`0x${string}`[]>([])
   const [slicerId, setSlicerId] = useState(0)
 
   const { data: isUnsetRepo } = useSWR(
@@ -63,16 +61,7 @@ const Main = () => {
     fetcher
   )
 
-  const { data, isLoading, isSuccess, signMessageAsync } = useSignMessage({
-    message: ethers.utils.arrayify(
-      ethers.utils.keccak256(
-        Buffer.from(
-          delegateAddress +
-            String(Math.floor(Math.floor(Date.now() / 1000) / 3600))
-        )
-      )
-    )
-  })
+  const signer = useEthersSigner()
 
   const payees = slicerOwners
     .filter((el) => el.account && el.shares > 0)
@@ -131,17 +120,29 @@ const Main = () => {
   const submit = async (e: React.SyntheticEvent<EventTarget>) => {
     e.preventDefault()
     setMessage(null)
+    setSignature("")
     setLoading(true)
     setUploadStep(1)
     setSlicerId(0)
     saEvent("setup_init")
 
     try {
-      const res = await signMessageAsync()
+      // const res = await signMessageAsync()
+      const res = await signer.signMessage(
+        ethers.utils.arrayify(
+          ethers.utils.keccak256(
+            Buffer.from(
+              delegateAddress +
+                String(Math.floor(Math.floor(Date.now() / 1000) / 3600))
+            )
+          )
+        )
+      )
       if (!res) {
         saEvent("setup_fail_signature")
         setUploadStep(4) // fail
       } else {
+        setSignature(res)
         setUploadStep(2)
 
         const contract = new ethers.Contract(
@@ -162,8 +163,6 @@ const Main = () => {
           )
           const tokenId = eventLogs?.find((log) => log.name === "TokenSliced")
             .args.tokenId
-
-          console.log({ eventLogs, tokenId })
 
           setSlicerId(Number(tokenId))
 
@@ -198,6 +197,8 @@ const Main = () => {
         }
       }
     } catch (err) {
+      console.log(err)
+
       saEvent(`setup_fail_${err}`)
       setUploadStep(4)
     }
@@ -206,10 +207,10 @@ const Main = () => {
   }
 
   useEffect(() => {
-    if (isSuccess && data) {
-      addDelegate(data.replace(/1b$/, "1f").replace(/1c$/, "20"))
+    if (signature) {
+      addDelegate(signature.replace(/1b$/, "1f").replace(/1c$/, "20"))
     }
-  }, [data])
+  }, [signature])
 
   useEffect(() => {
     if (uploadStep != 0) {
@@ -267,7 +268,7 @@ const Main = () => {
               <Button
                 type="submit"
                 label="Set up Slicer and Safe"
-                loading={isLoading || loading}
+                loading={loading}
               />
             </div>
           </ConnectBlock>
@@ -294,3 +295,5 @@ const Main = () => {
 }
 
 export default Main
+
+// TODO: Fix sign process

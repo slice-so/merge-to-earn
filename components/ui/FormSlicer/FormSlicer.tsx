@@ -13,7 +13,7 @@ type Props = {
   success: boolean
   slicerOwners: SlicerOwner[]
   setSlicerOwners: Dispatch<SetStateAction<SlicerOwner[]>>
-  currencies: string[]
+  currencies: `0x${string}`[]
   setCurrencies: Dispatch<SetStateAction<string[]>>
 }
 

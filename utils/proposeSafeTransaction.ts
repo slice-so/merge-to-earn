@@ -9,10 +9,7 @@ export type Mint = {
 
 const env = process.env.NEXT_PUBLIC_ENV // "mainnet" || "goerli"
 
-const baseUrl =
-  env == "mainnet"
-    ? `https://safe-transaction.${env}.gnosis.io/`
-    : `https://safe-transaction-${env}.safe.global/`
+const baseUrl = `https://safe-transaction-${env}.safe.global/`
 
 export const proposeTransaction = async (
   mints: Mint[],

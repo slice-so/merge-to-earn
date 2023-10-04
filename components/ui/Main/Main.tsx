@@ -31,10 +31,7 @@ const Main = () => {
   const { account, setModalView } = useAppContext()
 
   const env = process.env.NEXT_PUBLIC_ENV
-  const baseUrl =
-    env == "mainnet"
-      ? `https://safe-transaction.${env}.gnosis.io/`
-      : `https://safe-transaction-${env}.safe.global/`
+  const baseUrl = `https://safe-transaction-${env}.safe.global/`
   const delegateAddress = process.env.NEXT_PUBLIC_DELEGATE
 
   const [loading, setLoading] = useState(false)
@@ -71,8 +68,8 @@ const Main = () => {
     })
 
   const { config } = usePrepareContractWrite({
-    addressOrName: process.env.NEXT_PUBLIC_SLICECORE,
-    contractInterface: sliceCore.abi,
+    address: process.env.NEXT_PUBLIC_SLICECORE,
+    abi: sliceCore.abi,
     functionName: "slice",
     chainId: process.env.NEXT_PUBLIC_ENV == "goerli" ? 5 : 1,
     args: [

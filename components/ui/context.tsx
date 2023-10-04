@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react"
 import { View } from "@lib/content/modals"
-import { useAccount, useProvider } from "wagmi"
+import { useAccount, usePublicClient } from "wagmi"
 
 const AppContext = createContext<any>({
   connector: null,
@@ -14,7 +14,7 @@ const AppContext = createContext<any>({
 export function AppWrapper({ children }) {
   const [isConnected, setIsConnected] = useState(false)
   const [modalView, setModalView] = useState<View>({ name: "" })
-  const provider = useProvider()
+  const provider = usePublicClient()
 
   const { address: account, connector } = useAccount()
 

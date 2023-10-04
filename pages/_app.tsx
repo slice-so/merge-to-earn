@@ -10,25 +10,29 @@ import { SessionProvider } from "next-auth/react"
 import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit"
 import { alchemyProvider } from "wagmi/providers/alchemy"
 import { publicProvider } from "wagmi/providers/public"
-import { chain, createClient, configureChains, WagmiConfig } from "wagmi"
+import { createConfig, configureChains, WagmiConfig, mainnet } from "wagmi"
 import "@rainbow-me/rainbowkit/styles.css"
+import { goerli } from "viem/chains"
 
-const defaultChains = [chain[process.env.NEXT_PUBLIC_ENV]]
+const env = String(process.env.NEXT_PUBLIC_ENV)
+const alchemyId = String(process.env.NEXT_PUBLIC_ALCHEMY_ID)
 
-const { chains, provider } = configureChains(defaultChains, [
-  alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_ID }),
+const customChains = [env === "goerli" ? goerli : mainnet]
+const { chains, publicClient } = configureChains(customChains, [
+  alchemyProvider({ apiKey: alchemyId }),
   publicProvider()
 ])
 
 const { connectors } = getDefaultWallets({
   appName: "Merge to earn",
+  projectId: "b6b303d4bb338c257f14a56217bfd802",
   chains
 })
 
-const wagmiClient = createClient({
+const wagmiConfig = createConfig({
   autoConnect: true,
   connectors,
-  provider
+  publicClient
 })
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
@@ -41,7 +45,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
         storageKey="nightwind-mode"
         defaultTheme="dark"
       >
-        <WagmiConfig client={wagmiClient}>
+        <WagmiConfig config={wagmiConfig}>
           <RainbowKitProvider
             chains={chains}
             coolMode

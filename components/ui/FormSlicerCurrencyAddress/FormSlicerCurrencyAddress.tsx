@@ -4,7 +4,7 @@ import InputAddress from "../InputAddress"
 
 type Props = {
   index: number
-  currencies: string[]
+  currencies: `0x${string}`[]
   setCurrencies: Dispatch<SetStateAction<string[]>>
 }
 
@@ -15,7 +15,7 @@ const FormSlicerCurrencyAddress = ({
 }: Props) => {
   const [resolvedAddress, setResolvedAddress] = useState("")
 
-  const handleChange = (value: string) => {
+  const handleChange = (value: `0x${string}`) => {
     let items = [...currencies]
     items[index] = value
     setCurrencies(items)

@@ -4,7 +4,7 @@ import FormSlicerCurrencyAddress from "../FormSlicerCurrencyAddress"
 import saEvent from "@utils/saEvent"
 
 type Props = {
-  currencies: string[]
+  currencies: `0x${string}`[]
   setCurrencies: Dispatch<SetStateAction<string[]>>
 }
 

@@ -9,7 +9,7 @@ import { useAppContext } from "../context"
 import Input from "../Input/Input"
 
 export interface Props extends InputHTMLAttributes<HTMLInputElement> {
-  address: string
+  address: `0x${string}`
   resolvedAddress: string
   setResolvedAddress: Dispatch<SetStateAction<string>>
   label?: string
